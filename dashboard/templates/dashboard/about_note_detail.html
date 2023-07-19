@@ -1,0 +1,74 @@
+{% extends 'dashboard/header.html' %}
+{% load static %}
+
+
+{% block title %}
+{{about_note.title}} {{about_note.created}}
+{% endblock title %}
+
+
+
+{% block content %}
+
+<head>
+    <style>
+
+    </style>
+</head>
+<div class="row col-12 pt-5" style="margin: 100px auto;">
+
+    {% if about_note %}
+
+    <div class=" container" style="background-color: #000;">
+        <h2>{{about_note.title}} <span>
+        <blockquote>{{about_note.created}}</blockquote>
+            </span></h2>
+        {% if about_note.image %}
+        <img class="card-img" src="{{about_note.image.url}}" alt="">
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="container">
+        <h4>{{about_note.body|safe}}</h4>
+    </div>
+    <div class="container" style="margin-top: 80px;display: flex; margin-left: 10px;">
+        <h4><a class="badge badge-outline-light" href=" ">Add Images</a></h4>
+        <h5><a class="badge badge-outline-success" href="">Update</a><span><a
+                    class="badge badge-outline-danger"
+                    href="">Delete</a></span></h5>
+    </div>
+
+
+    {% if about_note.images %}
+
+    <div class="row">
+
+
+        <div class=" span12  mt-5">
+            <h2 class="center"> Other Images</h2>
+            <div class="wrapper" style="margin-top: 50px;">
+
+                {% for item in about_note.images.all %}
+                <div class="project-container">
+                    <img style="height: 200px; width: 200px;" src="{{item.image.url}}" alt=""
+                        class="image-container fit">
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+        {% endif %}
+
+
+
+
+        {% endif %}
+
+    </div>
+
+
+
+    {% endblock content %}

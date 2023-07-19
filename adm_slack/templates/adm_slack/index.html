@@ -1,0 +1,54 @@
+{% extends 'studio/header.html' %}
+{% load static %}
+{% block title %}
+    
+{% endblock title %}
+
+
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'adm_slack/d_down.css' %}">
+</head>
+
+<div class="row">
+    <div class="col-6">
+        <div class="wrapper">
+        <div class="dropdown">
+            <button class="dropbtn">Channels</button>
+            <div class="dropdown-content">
+                
+                {% if request.user.is_superuser %}
+                <a href="{% url 'adm_slack:create_channel' %}">Create Channel</a>
+                {% endif %}
+                    
+               
+                <a href="{% url 'adm_slack:list_channels' %}">List Channels</a>
+                <a href="#">Lock Channel</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Dropdown</button>
+            <div class="dropdown-content">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Dropdown</button>
+            <div class="dropdown-content">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+            </div>
+        </div>
+        </div>
+        
+    </div>
+   
+</div>
+    
+{% endblock content %}
+    
+    

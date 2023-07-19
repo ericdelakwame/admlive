@@ -1,0 +1,94 @@
+{% extends 'home/header.html' %}
+{% load static %}
+
+
+{% block title %}
+Blog: African Design Matters 
+{% endblock title %}
+
+
+
+{% block content %}
+<head>
+    <style>
+        *{
+            color: #fff;
+        }
+    </style>
+</head>
+<div id="content">
+
+    <div class="row">
+        <div class="span12">
+            <div class=" headline">
+                <h1>Blog</h1>
+            
+            </div>
+        </div>
+    </div>
+    
+<div class="row">
+    <div class="span12">
+
+    <div id="posts" class="container">
+    
+        {% if posts %}
+        <div class="wrapper">
+    
+            {% for post in posts %}
+            <div class="project-container ">
+                <a style="color: #fff;" href="{{post.get_absolute_url}}">
+            
+                <h3 class="center">Topic: {{post.heading}}</h3>
+                {% if post.image %}
+                <img src="{{post.image.url}}" alt="" class="project-image">
+                {% endif %}
+                <h5 class="center">By {{post.author.get_full_name}}</h5>
+                <h4 class="center">{{post.comments.count}} Comment{{post.comments.count|pluralize}}</h4>
+                </a>
+    
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="container" data-aos="flip-right" data-aos-duration="1000">
+    
+            <h2 class="alert warning center">
+                No posts have been uploaded at this time. Please try again later
+            </h2>
+        </div>
+    
+        {% endif %}
+    
+    </div>
+    </div>
+</div>
+<div class="row" style="margin-top: 120px;">
+    <div class="span12">
+        <div class="container">
+            {% if posts.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ posts.previous_page_number }}">previous</a>
+            {% endif %}
+            
+            <div class="container" style="margin:50px auto;width: 80%;">
+                Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
+            </div>
+            
+            {% if posts.has_next %}
+            <a href="?page={{ posts.next_page_number }}">next</a>
+            <a href="?page={{ posts.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </div>
+        
+                
+          
+       
+</div>
+
+</div>
+
+{% endblock content %}
+    
+	
+        

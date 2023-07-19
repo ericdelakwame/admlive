@@ -1,0 +1,92 @@
+{% extends 'studio/header.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    {{channel.name}}
+{% endblock title %}
+
+
+
+{% block content %}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-title">
+                <h2>Channel: {{channel.name_normalized}}</h2>
+            </div>
+
+            <div class="card-body">
+                <h4>About this channel</h4>
+                
+                {% if channel.is_private %}
+                    <p>** This is a private channel
+                    {% else %}
+                    This is a public channel
+                    </p>
+                {% endif %}
+
+                <p>
+                    
+                    {% if channel.topic %}
+                    <p>Topic .. <span>{{channel.topic.value}}</span>
+                    {% else %}</p>
+                        <span>No Topic has been set for {{channel.name}}</span>
+                    {% endif %}
+                        
+                </p>
+                <p>
+                    
+                    {% if channel.purpose %}
+                        {{channel.purpose.value}}
+                        {% else %}
+                        The purpose of this channel is yet to be set
+                    {% endif %}
+                        
+                </p>
+                    
+            </div>
+        </div>
+    </div>
+</div>
+    
+
+    <div class="row">
+        <div class="col-6">
+            <div class="card">
+                <p class="card-header">
+                    Invite Users To {{channel.name}}
+                </p>
+    
+                <div class="card-body">
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{form.as_table}}
+                        <button type="submit" class="btn btn-light">
+                            Invite
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6">
+            
+            
+            {% if invitation %}
+            <h4 class="card-heading">
+                Invited Users
+            </h4>
+            
+            {% for user in invitation %}
+                <a href="">{{user.name}}</a>
+            {% endfor %}
+                
+            {% endif %}
+                
+        </div>
+    </div>
+{% endblock content %}
+    
+    

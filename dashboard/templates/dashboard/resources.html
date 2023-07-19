@@ -1,0 +1,27 @@
+{% extends 'dashboard/header.html' %}
+{% load static %}
+
+
+
+{% block title %}
+Resources
+    
+{% endblock title %}
+
+
+
+{% block content %}
+
+<div class="row">
+    <div class="col-12">
+        <h1 class="center mt-5">Resources</h1>
+        
+        {% for resource in resources %}
+            <p><a href="{% url 'dashboard:resource_detail' resource.pk %}">{{resource.content|safe}}</a></p>
+        {% endfor %}
+            
+    </div>
+</div>
+    
+{% endblock content %}
+    

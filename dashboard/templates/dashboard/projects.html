@@ -1,0 +1,122 @@
+{% extends 'dashboard/header.html' %}
+{% load static %}
+{% load hitcount_tags %}
+
+
+{% block title %}
+Projects In African Design Matters
+
+{% endblock title %}
+
+
+
+{% block content %}
+<head>
+    <style>
+        .fit{
+            object-fit: contain;
+        }
+        .wrapper{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .project-container{
+            height: 300px;
+            width: 80%;
+            margin: auto;
+           
+           
+        }
+        .project-image{
+           width: 100%;
+           height: 100%;
+           object-fit: contain;
+        }
+
+        @media screen and (max-width:600px){
+            .wrapper{
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10;
+            }
+        }
+    </style>
+   
+    
+</head>
+
+<div id="content">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="sub-headline container">
+                <h1 style="text-align: left; margin-top: 50px;">Directory</h1>
+            </div>
+            
+            <div id="projects" class="container" style="margin: 50px auto;">
+            
+                {% if projects %}
+                <div class="wrapper">
+            
+                    {% for project in projects %}
+                    <div class="project-container ">
+                        <a style="color: #fff;" href="{{project.get_absolute_url}}">
+                            <h6 class="center">{{project.name}}: {{project.reviews.count}} Review{{project.reviews.count|pluralize}}
+                            </h6>
+                            <h6>
+                                <span>Views: {% get_hit_count for project %}</span>
+                            </h6>
+                            <h6 class="center">{{project.owner.get_full_name}}</h6>
+                            {% if project.image %}
+                            <img class="project-image fit" src="{{project.image.url}}" alt="" ;>
+                            {% endif %}
+            
+            
+                        </a>
+            
+                    </div>
+                    {% endfor %}
+            
+            
+                </div>
+            
+                {% else %}
+                <div class="container" data-aos="flip-right" data-aos-duration="1000">
+            
+                    <h2 class="alert warning center">
+                        No projects have been uploaded at this time. Please try again later
+                    </h2>
+                </div>
+            
+                {% endif %}
+            
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin: 50px auto;">
+        <div class="col-12" >
+            <div class="pagination">
+                <span class="step-links">
+                    {% if projects.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ projects.previous_page_number }}">previous</a>
+                    {% endif %}
+            
+                    <span class="current">
+                        Page {{ projects.number }} of {{ projects.paginator.num_pages }}.
+                    </span>
+            
+                    {% if projects.has_next %}
+                    <a href="?page={{ projects.next_page_number }}">next</a>
+                    <a href="?page={{ projects.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+   
+</div>
+
+{% endblock content %}

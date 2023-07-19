@@ -1,0 +1,40 @@
+{% extends 'home/header.html' %}
+
+
+{% block title %}
+Resources
+    
+{% endblock title %}
+    
+
+    
+    {% block content %}
+   
+        <div class="row">
+            <div class="span12">
+                <div class="headline">
+                    <h1>Resources</h1>
+                </div>
+
+    <div class="container">
+    <!-- <hr style="width: 80%; margin-top: 5px auto; "> -->
+    
+        <table class="table">
+            <thead>
+                                          
+        {% for item in resources %}
+        <tr>
+            <th style="border-top:1px solid #eee; border-bottom: 1px solid #eee; vertical-align: middle; padding-top: 10px; display: block;">{{item.content|safe}} </th>
+        </tr>     
+        {% endfor %}
+                                        
+                                
+                            </thead>
+                        </table>
+                </div>                   
+            </div>  
+        </div>
+    
+        
+    {% endblock content %}
+        

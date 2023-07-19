@@ -1,0 +1,52 @@
+{% extends 'studio/header.html' %}
+
+{% load static %}
+
+
+{% block title %}
+    Categories
+{% endblock title %}
+    
+
+
+{% block content %}
+<head>
+    <style>
+        th, td{
+            font-size: 16px;
+            color: #fff;
+        }
+
+       
+    </style>
+</head>
+<section id="project-categories">
+    <div id="content">
+        <div  class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>No Of Projects</th>
+                        <th>**</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    
+                    {% for category in categories %}
+                        <tr>
+                            <td>{{category.name}}</td>
+                            <td>{{category.projects.count}}</td>
+                            <td><a class="btn btn-dark" href="{% url 'studio:category_detail' category.pk %}">See More</a></td>
+                        </tr>
+                    {% endfor %}
+                        
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+    
+{% endblock content %}
+    

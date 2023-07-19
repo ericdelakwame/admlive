@@ -1,0 +1,193 @@
+{% extends 'home/header.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load hitcount_tags %}
+
+
+{% block title %}
+Project: {{project.name}}
+
+{% endblock title %}
+
+
+
+{% block content %}
+
+<head>
+    <style>
+        /* #project-detail{
+           margin: 170px auto;
+        } */
+    </style>
+</head>
+
+<section id="project-detail" style="margin: 0px auto;">
+    <div id="content">
+
+        <!-- /// CONTENT  /////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+        <div class="container">
+            <div class="row">
+                <div class="span12" style="margin: 30px auto;">
+
+                    <div class="blog-post">
+
+                        <div class="blog-post-thumb">
+
+                            {% if project.image %}
+                            <img src="{{project.image.url}}" alt="">
+                            {% endif %}
+
+
+
+                        </div><!-- end .blog-post-thumb -->
+
+                        <div class="blog-post-title">
+
+                            <h6>{{project.created}}</h6>
+
+                            <h2>{{project.name}} : <i class="fa fa-eye"></i> {% get_hit_count for project %} Views</h2>
+
+                            <h6>
+                                by
+                                <a
+                                    href="{% url 'accounts:user_profile' project.owner.pk %}">{{project.owner.get_full_name}}</a>
+                                |
+                                <a href="#"></a>
+                            </h6>
+
+                        </div><!-- end .blog-post-title -->
+
+                        <div class="blog-post-info">
+
+                            <p> {{project.intro}} </p>
+
+                        </div><!-- end .blog-post-info -->
+
+                        <br>
+
+
+                        <div class="blog-post-info">
+
+                            <p>{{project.description}}</p>
+
+                            <blockquote>
+
+                                <h4 class="mute"><em>Thanks </em></h4>
+
+                            </blockquote>
+
+
+                        </div><!-- end .blog-post-info -->
+
+                    </div><!-- end .blog-post -->
+                    <div class="container">
+                        <form action="" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{review_form|crispy}}
+                            <button class="btn btn-black" type="submit">
+                                Review
+                            </button>
+                        </form>
+                    </div>
+
+                    <div id="comments" class="comments-area">
+
+                        {% if project.owner.projects.count > 0 %}
+                        <h3 class="comments-title">Other Projects By {{project.owner.get_full_name}}</h3>
+                        {% endif %}
+
+
+                        <div class="container">
+
+                            <div class="owl-carousel">
+
+                                {% for project in project.owner.projects.all %}
+                                <li>
+                                    <div style="height: 400px; width: 100%;">
+                                        <h4>{{project.name}}</h4>
+
+                                        {% if project.image %}
+                                        <img style="width: 60%; height: 300px;" src="{{project.image.url}}" alt="">
+
+                                        {% endif %}
+                                        <h6>{{project.created}}</h6>
+                                        <h6><a class="btn btn-black" href="{{project.get_absolute_url}}">View</a></h6>
+
+                                    </div>
+                                </li>
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+                        <nav id="comment-nav-below" class="navigation" role="navigation">
+                            <h3 class="assistive-text section-heading">
+
+                                {% if project.owner.profile is not None %}
+                                <a class="btn btn-black" href="{% url 'accounts:user_profile' project.owner.pk %}">My
+                                    Profile Page</a>
+
+                                {% endif %}
+
+                            </h3>
+                        </nav>
+
+                        <div id="respond" class="comment-respond">
+
+
+
+                        </div>
+
+
+
+                    </div><!-- #comments .comments-area -->
+
+                </div><!-- end .span9 -->
+               
+            </div><!-- end .row -->
+        </div><!-- end .container -->
+
+        <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+    </div><!-- end #content -->
+</section>
+
+{% endblock content %}
+
+
+
+{% block javascript %}
+<script>
+    $(document).ready(function () {
+        $('.owl-carousel').owlCarousel({
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+            // loop: true,
+            margin: 10,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: true,
+                    loop: true,
+                },
+                600: {
+                    items: 1,
+                    nav: true,
+                    loop: true,
+                },
+                1000: {
+                    items: 5,
+                    nav: true,
+                    loop: true,
+                    margin: 20
+                }
+            }
+        })
+    })
+</script>
+
+
+{% endblock javascript %}

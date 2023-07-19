@@ -1,0 +1,26 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+
+{% block title %}
+    Not Enough Stock
+{% endblock title %}
+    
+
+
+{% block content %}
+
+<section id="stock-warning" style="margin: 80px auto; width: 80%;">
+    <div class="container center">
+        <h1>Not Enough Stock</h1>
+    </div>
+
+    <p>The  branch`s stock is not enough for your order</p>
+
+    <h4>Please re-enter stock and continue</h4>
+    <p>Thank You</p>
+    <a class="gas-color btn1" href="{% url 'cart:cart_detail' %}">Re-enter Stock</a>
+</section>
+    
+{% endblock content %}
+    

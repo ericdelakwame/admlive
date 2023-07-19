@@ -1,0 +1,55 @@
+{% extends 'dashboard/header.html' %}
+{% load static %}
+
+
+
+{% block title %}
+    {{category.name}}
+{% endblock title %}
+
+
+
+{% block content %}
+<head>
+    <style>
+        
+        #category-detail{
+            width: 80%;
+            margin: 30px auto;
+        }
+       
+    </style>
+</head>
+    <section id="category-detail">
+        <div class="table-responsive">
+            <h2>{{category.name}} <span style="font-size: 13px;">{{category.projects.count}} Project{{category.projects.count|pluralize}}</span></h2>
+
+            <table class="table table-light">
+                <thead>
+                    <tr>
+                        <th>Project</th>
+                        <th>Owner</th>
+                        <th>Created</th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    {% for project in category.projects.all %}
+                    <tr>
+                        <td>{{project.name}}</td>
+                    <td>{{project.owner}}</td>
+                    <td>{{project.created}}</td>
+                    <td><a href="{{project.get_absolute_url}}">Visit</a></td>
+
+                    </tr>
+                    {% endfor %}
+                        
+                    
+                </tbody>
+            </table>
+        </div>
+    </section>    
+{% endblock content %}
+    
+    

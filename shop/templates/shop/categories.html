@@ -1,0 +1,133 @@
+{% extends 'home/header.html' %}
+{% load static %}
+
+
+{% block title %}
+Merchandise
+    
+{% endblock title %}
+
+
+{% block content %}
+
+            <div id="content">
+    
+                <!-- /// CONTENT  /////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+    
+                <div class="container">
+                    <div class="row">
+                        <div class="span3">
+    
+                            <div class="widget widget_categories">
+                                
+                                {% if product_categories %}
+                                    <h3 class="widget-title">Categories</h3>
+
+                                <ul>
+                                    
+                                    {% for cat in product_categories  %}
+                                        <li class="cat-item">
+                                            <a href="{{cat.get_absolute_url}}" title="View all posts filed under Dresses">{{cat.name}}</a>
+                                        </li>
+                                    {% endfor %}
+                                        
+                                
+                                </ul>
+                                {% endif %}
+                                    
+    
+    
+                            </div><!-- end .widget_categories -->
+    
+                            <div class="widget widget_tag_cloud">
+    
+                                <h3 class="widget-title">Tags</h3>
+    
+                                <div class="tagcloud">
+                                  
+                                    <a class="tag-link-5" title="5 topic" href="#">Army</a>
+                                </div><!-- end .tagcloud -->
+    
+                            </div><!-- end .widget_tag_cloud -->
+    
+                        </div><!-- end .span3 -->
+                        <div class="span9">
+                            
+                            {% if product_categories %}
+                            
+                            {% for cat in product_categories%}
+                                {% if cat.products %}
+                                <h2>Products</h2>
+                                
+                                <ul class="products three-cols fixed">
+                                
+                                    {% for product in products %}
+                                    <li class="product">
+                                
+                                        <a href="{{product.get_absoulte_url}}">
+                                
+                                            {% if product.image %}
+                                            <img src="{{product.image.url}}" alt="">
+                                            {% endif %}
+                                
+                                
+                                
+                                            <h4>
+                                                <small>Tops</small>
+                                                Asymetric Blue Top
+                                            </h4>
+                                
+                                            <h5 class="price">{{product.price}}</h5>
+                                
+                                        </a>
+                                
+                                        <a class="btn add_to_cart_button" href="#">Add to cart</a>
+                                
+                                    </li>
+                                    {% endfor %}
+                                
+                                
+                                </ul>
+                                {% endif %}
+                            {% endfor %}
+                                
+                                
+                            {% endif %}
+                           
+                                
+    
+    
+                        </div><!-- end .span9 -->
+                    </div><!-- end .row -->
+                </div><!-- end .container -->
+    
+                <div class="container">
+                    <div class="row">
+                        <div class="span12">
+    
+                            <ul class="pagination">
+                                <li class="current">
+                                    <a href="#">1</a>
+                                </li>
+                                <li>
+                                    <a href="#">2</a>
+                                </li>
+                                <li>
+                                    <a href="#">3</a>
+                                </li>
+                                <li>
+                                    <a href="#">4</a>
+                                </li>
+                                <li>
+                                    <a href="#">5</a>
+                                </li>
+                            </ul><!-- end .pagination -->
+    
+                        </div><!-- end .span12 -->
+                    </div><!-- end .row -->
+                </div><!-- end .container -->
+    
+                <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+    
+            </div><!-- end #content -->
+    {% endblock content %}

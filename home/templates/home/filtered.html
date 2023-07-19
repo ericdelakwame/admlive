@@ -1,0 +1,496 @@
+{% extends 'home/header.html' %}
+{% load static %}
+
+{% block title %}
+Projects By {{verb.title}}
+    
+{% endblock title %}
+    
+
+
+{% block content %}
+<head>
+    <style>
+        .wrapper1{
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: auto;
+            grid-column-start: span;
+        }
+        .project-image{
+            width: 60%;
+            height: 60%;
+            object-fit: contain;
+        }
+
+        @media screen and (max-width:600px){
+            .wrapper1{
+                display: flex;
+                flex-direction: row;
+                justify-items: center;
+                justify-content: space-between;
+
+
+            }
+        }
+    </style>
+</head>
+<div id="content">
+
+    <!-- Black Filter -->
+    {% if black is not None %}
+    
+    <div class="row">
+        <div class="span12">
+            <div class="container" >
+                <div class="headline" data-aos="flip-right" data-aos-duration="1000">
+                    <h1>Studios By {{verb.title}} designers: </h1>
+                </div>
+                <h2>{{black.count}} Found</h2>
+
+        <div class="wrapper1">
+    
+            {% for designer in black %}
+            <div  style="height:300px; width: 300px; text-align: center;">
+                <h4>{{designer.get_full_name.title}}</h4>
+                {% if designer.photo %}
+               
+                    <img class="project-image" src="{{designer.photo.url}}" alt="">
+              
+                <h5>Projects: {{designer.projects.count}}</h5>
+        
+                {% if designer.profile %}
+                <a class="btn btn-black" href="{% url 'accounts:user_profile' designer.pk %}">See More</a>
+                {% else %}
+                <h6>No Profile To Show. Please come back when {{designer.first_name}} uploads a project</h6>
+                {% endif %}
+        
+        
+                {% endif %}
+        
+            </div>
+            {% endfor %}
+        
+        
+        
+        </div>
+
+                
+            
+            </div>
+        </div>
+    </div>
+
+   <!-- End Black Filter -->
+
+    <!-- African Filter -->
+    {% elif african is not None %}
+    
+    <div class="row">
+        <div class="span12">
+            <div class="container">
+                <div class="headline" data-aos="flip-right" data-aos-duration="1000">
+                    <h1>Studios By {{verb.title}} designers: </h1>
+                </div>
+                <h2>{{african.count}} Found</h2>
+    
+                <div class="wrapper1">
+    
+                    {% for designer in african %}
+                    <div style="height:300px; width: 300px; text-align: center; margin: auto;">
+                        <h4>{{designer.get_full_name.title}}</h4>
+                        {% if designer.photo %}
+                    
+                            <img class="project-image" src="{{designer.photo.url}}" alt="">
+                        
+                        <h5>Projects: {{designer.projects.count}}</h5>
+    
+                        {% if designer.profile %}
+                        <a class="btn btn-black" href="{% url 'accounts:user_profile' designer.pk %}">See More</a>
+                        {% else %}
+                        <h6>No Profile To Show. Please come back when {{designer.first_name}} uploads a project</h6>
+                        {% endif %}
+    
+    
+                        {% endif %}
+    
+                    </div>
+                    {% endfor %}
+    
+    
+    
+                </div>
+    
+    
+    
+            </div>
+        </div>
+    </div>
+   
+<!-- End African Filter -->
+
+<!-- African American Filter -->
+
+    {% elif african_american is not None %}
+    
+<div class="row">
+    <div class="span12">
+        <div class="container">
+            <div class="headline" data-aos="flip-right" data-aos-duration="1000">
+                <h1>Studios By {{verb.title}} designers: </h1>
+            </div>
+            <h2>{{african_american.count}} Found</h2>
+
+            <div class="wrapper1">
+
+                {% for designer in african_american %}
+                <div style="height:300px; width: 300px; text-align: center;">
+                    <h4>{{designer.get_full_name.title}}</h4>
+                    {% if designer.photo %}
+                   
+                        <img class="project-image" src="{{designer.photo.url}}" alt="">
+                    
+                    <h5>Projects: {{designer.projects.count}}</h5>
+
+                    {% if designer.profile %}
+                    <a class="btn btn-black" href="{% url 'accounts:user_profile' designer.pk %}">See More</a>
+                    {% else %}
+                    <h6>No Profile To Show. Please come back when {{designer.first_name}} uploads a project</h6>
+                    {% endif %}
+
+
+                    {% endif %}
+
+                </div>
+                {% endfor %}
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+    
+<!-- End African American Filter -->
+
+
+<!-- Colored Filter -->
+    {% elif colored is not None %}
+    
+<div class="row">
+    <div class="span12">
+        <div class="container">
+            <div class="headline" data-aos="flip-right" data-aos-duration="1000">
+                <h1>Studios By {{verb.title}} designers: </h1>
+            </div>
+            <h2>{{colored.count}} Found</h2>
+
+            <div class="wrapper1">
+
+                {% for designer in colored %}
+                <div style="height:300px; width: 300px; text-align: center;">
+                    <h4>{{designer.get_full_name.title}}</h4>
+                    {% if designer.photo %}
+                    
+                        <img class="project-image" src="{{designer.photo.url}}" alt="">
+                   
+                    <h5>Projects: {{designer.projects.count}}</h5>
+
+                    {% if designer.profile %}
+                    <a class="btn btn-black" href="{% url 'accounts:user_profile' designer.pk %}">See More</a>
+                    {% else %}
+                    <h6>No Profile To Show. Please come back when {{designer.first_name}} uploads a project</h6>
+                    {% endif %}
+
+
+                    {% endif %}
+
+                </div>
+                {% endfor %}
+
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+    
+<!-- End Colored Filter -->
+
+<!-- Indigenous Filter -->
+
+{% elif indigenous is not None %}
+
+<div class="row">
+    <div class="span12">
+        <div class="container">
+            <div class="headline" data-aos="flip-right" data-aos-duration="1000">
+                <h1>Studios By {{verb.title}} designers: </h1>
+            </div>
+            <h2>{{indigenous.count}} Found</h2>
+
+            <div class="wrapper1">
+
+                {% for designer in indigenous %}
+                <div style="height:300px; width: 300px; text-align: center;">
+                    <h4>{{designer.get_full_name.title}}</h4>
+                    {% if designer.photo %}
+                
+                        <img class="project-image" src="{{designer.photo.url}}" alt="">
+                 
+                    <h5>Projects: {{designer.projects.count}}</h5>
+
+                    {% if designer.profile %}
+                    <a class="btn btn-black" href="{% url 'accounts:user_profile' designer.pk %}">See More</a>
+                    {% else %}
+                    <h6>No Profile To Show. Please come back when {{designer.first_name}} uploads a project</h6>
+                    {% endif %}
+
+
+                    {% endif %}
+
+                </div>
+                {% endfor %}
+
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+<!-- End Indigenous Filter -->
+
+<!-- Male Filter -->
+{% elif male is not None %}
+<div class="row">
+    <div class="span12">
+        <div class="container">
+            <div class="headline" data-aos="flip-right" data-aos-duration="1000">
+                <h1>Studios By {{verb.title}} designers: </h1>
+            </div>
+            <h2>{{male.count}} Found</h2>
+
+            <div class="wrapper1">
+
+                {% for designer in male %}
+                <div style="height:300px; width: 300px; text-align: center;">
+                    <h4>{{designer.get_full_name.title}}</h4>
+                    {% if designer.photo %}
+                   
+                        <img class="project-image" src="{{designer.photo.url}}" alt="">
+                   
+                    <h5>Projects: {{designer.projects.count}}</h5>
+
+                    {% if designer.profile %}
+                    <a class="btn btn-black" href="{% url 'accounts:user_profile' designer.pk %}">See More</a>
+                    {% else %}
+                    <h6>No Profile To Show. Please come back when {{designer.first_name}} uploads a project</h6>
+                    {% endif %}
+
+
+                    {% endif %}
+
+                </div>
+                {% endfor %}
+
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+<!-- End Male -->
+
+<!-- Female -->
+{% elif female is not None %}
+<div class="row">
+    <div class="span12">
+        <div class="container">
+            <div class="headline" data-aos="flip-right" data-aos-duration="1000">
+                <h1>Studios By {{verb.title}} designers: </h1>
+            </div>
+            <h2>{{female.count}} Found</h2>
+
+            <div class="wrapper1">
+
+                {% for designer in female %}
+                <div style="height:300px; width: 300px; text-align: center;">
+                    <h4>{{designer.get_full_name.title}}</h4>
+                    {% if designer.photo %}
+                 
+                        <img class="project-image" src="{{designer.photo.url}}" alt="">
+                 
+                    <h5>Projects: {{designer.projects.count}}</h5>
+
+                    {% if designer.profile %}
+                    <a class="btn btn-black" href="{% url 'accounts:user_profile' designer.pk %}">See More</a>
+                    {% else %}
+                    <h6>No Profile To Show. Please come back when {{designer.first_name}} uploads a project</h6>
+                    {% endif %}
+
+
+                    {% endif %}
+
+                </div>
+                {% endfor %}
+
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+<!-- End Female -->
+
+<!-- Other -->
+{% elif other_gender is not None %}<div class="row">
+    <div class="span12">
+        <div class="container">
+            <div class="headline" data-aos="flip-right" data-aos-duration="1000">
+                <h1>Studios By {{verb.title}} designers: </h1>
+            </div>
+            <h2>{{other_gender.count}} Found</h2>
+
+            <div class="wrapper1">
+
+                {% for designer in other_gender %}
+                <div style="height:300px; width: 300px; text-align: center;">
+                    <h4>{{designer.get_full_name.title}}</h4>
+                    {% if designer.photo %}
+                    
+                        <img class="project-image" src="{{designer.photo.url}}" alt="">
+                
+                    <h5>Projects: {{designer.projects.count}}</h5>
+
+                    {% if designer.profile %}
+                    <a class="btn btn-black" href="{% url 'accounts:user_profile' designer.pk %}">See More</a>
+                    {% else %}
+                    <h6>No Profile To Show. Please come back when {{designer.first_name}} uploads a project</h6>
+                    {% endif %}
+
+
+                    {% endif %}
+
+                </div>
+                {% endfor %}
+
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div><!-- End Other -->
+
+<!-- Creative Type -->
+{% elif creative_type is not None %}
+<div class="row">
+    <div class="span12">
+        <div class="container">
+            <div class="headline" data-aos="flip-right" data-aos-duration="1000">
+                <h1>Studios By {{verb.title}} designers: </h1>
+            </div>
+            <h2>{{creative_type.count}} Found</h2>
+
+            <div class="wrapper1">
+
+                {% for designer in creative_type %}
+                <div style="height:300px; width: 300px; text-align: center;">
+                    <h4>{{designer.get_full_name.title}}</h4>
+                    {% if designer.photo %}
+                   
+                        <img class="project-image" src="{{designer.photo.url}}" alt="">
+                   
+                    <h5>Projects: {{designer.projects.count}}</h5>
+
+                    {% if designer.profile %}
+                    <a class="btn btn-black" href="{% url 'accounts:user_profile' designer.pk %}">See More</a>
+                    {% else %}
+                    <h6>No Profile To Show. Please come back when {{designer.first_name}} uploads a project</h6>
+                    {% endif %}
+
+
+                    {% endif %}
+
+                </div>
+                {% endfor %}
+
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+<!-- End Creative Type -->
+
+<!-- Paragon -->
+{% elif paragon is not None %}
+<div class="row">
+    <div class="span12">
+        <div class="container">
+            <div class="headline" data-aos="flip-right" data-aos-duration="1000">
+                <h1>{{verb.title}}S</h1>
+            </div>
+            <h2>{{paragon.count}} Found</h2>
+
+            <div class="wrapper1">
+
+                {% for designer in paragon %}
+                <div style="height:300px; width: 300px; text-align: center;">
+                    <h4>{{designer.get_full_name.title}}</h4>
+                    {% if designer.photo %}
+                   
+                        <img class="project-image" src="{{designer.photo.url}}" alt="">
+                   
+                    <h5>Projects: {{designer.projects.count}}</h5>
+
+                    {% if designer.profile %}
+                    <a class="btn btn-black" href="{% url 'accounts:user_profile' designer.pk %}">See More</a>
+                    {% else %}
+                    <h6>No Profile To Show. Please come back when {{designer.first_name}} uploads a project</h6>
+                    {% endif %}
+
+
+                    {% endif %}
+
+                </div>
+                {% endfor %}
+
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+<!-- End Paragon -->
+    
+{% endif %}
+    
+<!-- End Content -->
+</div>
+
+    
+{% endblock content %}
+    

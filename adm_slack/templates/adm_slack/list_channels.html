@@ -1,0 +1,83 @@
+{% extends 'studio/header.html' %}
+{% load static %}
+
+
+{% block title %}
+List Of ADM Channels On Slack
+
+{% endblock title %}
+
+
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'adm_slack/d_down.css' %}">
+</head>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="container">
+                    <h2 class="card-heading">
+                        List Of Channels On ADM Slack App
+                    </h2>
+                    <div class="card-body">
+                        <div class="wrapper1">
+                            {% for channel in channels %}
+
+                            <div class="dropdown">
+                                <button class="dropbtn">{{channel.name}}</button>
+                                <div class="dropdown-content">
+
+                                    {% if request.user.is_superuser %}
+                                    <a href="{% url 'adm_slack:create_channel' %}">Create Channel</a>
+                                    <a href="#">Lock Channel</a>
+                                    {% endif %}
+
+
+                                    <a href="{% url 'adm_slack:channel_detail' channel.id %}">Channel Info</a>
+
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+
+    <div class="col-12">
+
+        {% if channel %}
+        <div class="container">
+            <h2 class="card-title">{{channel.id}}</h2>
+
+            <div>
+                <table class="table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Created</th>
+                            <th>No Of Users</th>
+                        </tr>
+                    </thead>
+
+                </table>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+
+</div>
+{% endblock content %}

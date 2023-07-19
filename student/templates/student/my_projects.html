@@ -1,0 +1,51 @@
+{% extends 'student/header.html' %}
+{% load static %}
+{% load hitcount_tags %}
+
+
+
+{% block title %}
+
+{% endblock title %}
+
+
+{% block content %}
+<section id="my-projects" style="margin: 50px auto;">
+
+    <h3>Projects By: <span style="font-size: 18px;">{{student.get_full_name}}</span></h3>
+
+    <div class="container1" style="margin: 50px auto;">
+
+        {% if my_projects %}
+        <div class="wrapper">
+            {% for project in my_projects %}
+            <div class="project-container">
+                <h6>{{project.name}}</h6>
+                <h6>{% get_hit_count for project %} Views</h6>
+
+                {% if project.image %}
+                <a href="{{project.get_absolute_url}}">
+                    <img class="project-image fit" src="{{project.image.url}}" alt="">
+                </a>
+                
+                {% endif %}
+               
+                
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+        {% else %}
+        <h4 class="text-danger">
+            {{student.get_full_name}} has not uploaded any projects.
+        </h4>
+        <h6>Please come back at a later time</h6>
+        
+        {% endif %}
+
+    </div>
+
+</section>
+{% endblock content %}

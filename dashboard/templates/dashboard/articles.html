@@ -1,0 +1,195 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+
+{% block title %}
+Editorials
+
+{% endblock title %}
+
+
+{% block content %}
+
+<div id="content">
+
+    <!-- /// CONTENT  /////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <div class="container">
+        <div class="row">
+            <div class="span9">
+
+                {% for article in articles %}
+
+                <div class="blog-post">
+
+                    {% if article.image %}
+                    <div class="blog-post-thumb">
+
+                        <img src="{{article.image.url}}" alt="">
+
+                    </div><!-- end .blog-post-thumb -->
+                    {% endif %}
+
+
+                    <div class="blog-post-title">
+
+                        <h6>{{article.created}}</h6>
+
+                        <h2>
+                            {{article.heading}} 
+                        </h2>
+
+                        <h6>
+                            by
+                            <a href="#">{{article.author.get_full_name}}</a> 
+                          
+                        </h6>
+
+                    </div><!-- end .blog-post-title -->
+
+                    <div class="blog-post-info">
+
+                        <h2> {{article.subheading}}</h2>
+
+                        <a class="btn  btn-black" href="{{article.get_absolute_url}}"> Review</a>
+
+                        <div>
+
+                            <a class="social-icon facebook-icon" href="#">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                            <a class="social-icon twitter-icon" href="#">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                            <a class="social-icon googleplus-icon" href="#">
+                                <i class="fa fa-google-plus"></i>
+                            </a>
+                            <a class="social-icon linkedin-icon" href="#">
+                                <i class="fa fa-linkedin"></i>
+                            </a>
+                            <a class="social-icon pinterest-icon" href="#">
+                                <i class="fa fa-pinterest"></i>
+                            </a>
+
+                        </div>
+
+                    </div><!-- end .blog-post-info -->
+
+                </div><!-- end .blog-post -->
+                {% endfor %}
+
+
+
+            </div><!-- end .span9 -->
+            <div class="span3">
+
+                <div class="widget widget_search">
+
+                    <form action="#" class="searchform" id="searchform" method="get" name="searchform">
+                        <div>
+                            <label class="screen-reader-text" for="s">Search for:</label>
+                            <input id="s" name="s" type="text" placeholder="enter keyword here...">
+                            <input id="searchsubmit" type="submit" value="">
+                        </div>
+                    </form>
+
+                </div><!-- end .widget_search -->
+                
+                {% if blog_posts %}
+                <div class="widget widget_categories">
+                    <h3 class="widget-title">Blog Posts</h3>
+                
+                    <ul>
+                
+                        {% for post in blog_posts %}
+                
+                        <li class="cat-item">
+                            <a href="#" title="View all posts filed under Personal">{{post.heading}} {{post.created}}</a>
+                            
+                            {% if post.publish %}
+                                <span>Published</span>
+                                {% else %}
+                                <span>Unpublished</span>
+                            {% endif %}
+                                
+                        </li>
+                        {% endfor %}
+                
+                
+                    </ul>
+                
+                </div><!-- end .widget_categories -->
+     
+                {% endif %}
+                    
+               
+                <div class="widget widget_archive">
+
+                    <h3 class="widget-title">Archives</h3>
+
+                    <ul>
+                        
+                        {% for article in articles %}
+                            <li>
+                                <a href='{{article.get_absolute_url}}'>{{article.created|date:"Y:m:d"}}</a>
+                            <li>
+                        {% endfor %}
+                            
+                        
+                    </ul>
+
+                </div><!-- end .widget_archive -->
+
+
+                <div class="widget ewf_widget_facebook">
+
+                    <h3 class="widget-title">Publish On Facebook</h3>
+
+                    <div class="fb-follow" data-href="https://www.facebook.com/zuck" data-colorscheme="light"
+                        data-layout="standard" data-show-faces="true"></div>
+
+                </div><!-- end .widget_text -->
+
+            </div><!-- end .span3 -->
+        </div><!-- end .row -->
+    </div><!-- end .container -->
+
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+
+                <ul class="pagination">
+                    <li class="current">
+                        <a href="#">1</a>
+                    </li>
+                    <li>
+                        <a href="#">2</a>
+                    </li>
+                    <li>
+                        <a href="#">3</a>
+                    </li>
+                    <li>
+                        <a href="#">4</a>
+                    </li>
+                    <li>
+                        <a href="#">5</a>
+                    </li>
+                </ul><!-- end .pagination -->
+
+            </div><!-- end .span12 -->
+        </div><!-- end .row -->
+    </div><!-- end .container -->
+
+    <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+</div><!-- end #content -->
+
+
+{% endblock content %}
+
+
+
+{% block footer %}
+    
+{% endblock footer %}
+    

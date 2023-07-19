@@ -1,0 +1,31 @@
+{% extends 'home/header.html' %}
+{% load static %}
+{% load hitcount_tags %}
+
+
+{% block title %}
+    
+{% endblock title %}
+
+
+{% block content %}
+    <div id="content">
+        
+        {% if student_project %}
+        <div class="row">
+            <h1 class="headline">Project By {{student_project.student.get_full_name}} <span>
+                
+                {% if request.user == student_project.student %}
+                    <a class="btn btn-black" href="">Update</a>
+                {% endif %}
+                    
+            </span></h1>
+        </div>
+       
+            
+        {% endif %}
+            
+    </div>
+{% endblock content %}
+    
+    

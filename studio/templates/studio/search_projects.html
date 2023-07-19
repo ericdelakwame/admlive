@@ -1,0 +1,54 @@
+{% extends 'home/header.html' %}
+{% load static %}
+
+
+{% block title %}
+    Search results for {{query}}
+{% endblock title %}
+
+
+
+
+{% block content %}
+<div id="content">
+<div class="container">
+
+    {% if query %}
+    <div class="headline">
+        <h1 style="font-size: 20px;">Search results for "{{query}}"</h1>
+    </div>
+    {% endif %}
+
+
+    {% if projects %}
+    <p>{{projects.count}} Project{{projects.count|pluralize}} Found</p>
+
+<div class="wrapper">
+    {% for project in projects %}
+    
+        <div class="project-container">
+            <a style="color: #eee;" href="{{project.get_absolute_url}}">
+                <h4>{{project.name}}</h4>
+                {% if project.image %}
+                <img class="project-image" src="{{project.image.url}}" alt="">
+                {% endif %}
+                <h4>By: {{project.owner.get_full_name}}</h4>
+            </a>
+
+        </div>
+    
+    {% endfor %}
+</div>
+{% else %}
+<div class="headline">
+    <h1 style="font-size: 18px;">Sorry "{{query}}" did not match any records</h1>
+    <p>Please try another search</p>
+</div>
+    {% endif %}
+
+</div>
+</div>
+
+{% endblock content %}
+    
+    

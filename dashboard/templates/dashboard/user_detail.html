@@ -1,0 +1,97 @@
+{% extends 'dashboard/header.html' %}
+{% load static %}
+
+
+{% block title %}{{user.get_full_name}}{% endblock title %}
+    
+
+{% block content %}
+<head>
+<style>
+    #intro, #user {
+        width: 80%;
+        margin: 50px auto;
+    }
+
+    #user{
+        margin-top: 60px;
+    }
+    .photo-container{
+        width: 60%;
+        height: 400px;
+        margin: auto;
+    }
+    .fit{
+        object-fit: contain;
+    }    
+</style>
+</head>
+<section id='intro1'>
+    <div class="container">
+        <div class="container headline">
+            <h1>{{user.get_full_name}} 
+            {% if user.is_paragon %}
+                <span class="badge badge-outline-danger">Paragon</span>
+            {% endif %}
+                </h1>
+                
+                {% if user.is_moderator %}
+                <p><span class="badge badge-outline-light"><i class="fa fa-anchor"></i> {{user.first_name}} is an ADM Moderator <i class="fa fa-anchor"></i></span></p>
+                    
+                {% endif %}
+                    
+        </div>
+            
+            
+                <div class="container">
+                    {% if user.photo %}
+                    <img  style="width: 80%; height: 80%;" src="{{user.photo.url}}" alt="">
+                    {% else %}
+                    <h4>{{user.first_name.title}} has not uploaded any photos</h4>
+                    {% endif %}
+                    <h3><span class="btn btn-outline-dribbble">No Of Posts: {{user.posts.count}} </span></h3>
+                    <h3><span class="btn btn-outline-dribbble">Comments: {{user.comments.count}} </span></h3>
+                    <h3><span class="btn btn-outline-dribbble">No Of Projects: {{user.projects.count}} </span></h3>
+                    <h4><a class="btn btn-outline-success" href="{% url 'accounts:user_profile' user.pk %}">See Profile</a></h4>
+                </div>
+                
+    
+            <div class="table-responsive" style="overflow-x: auto;">
+            <table class="table table-light" style="margin-top: 40px; overflow-y: auto;">
+            
+                <thead>
+                    <tr>
+                        <th>Tel No</th>
+                        <th>Email</th>
+                        <th>Last Seen</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{user.tel_no.as_e164}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.last_login}}</td>
+                        <td>
+            
+                            {% if user.activated %}
+                            <span>Activated <a class="btn btn-danger"
+                                    href="{% url 'dashboard:deactivate_user' user.pk %}">Deactivate</a></span>
+                            {% else %}
+                            <span>Not Activated <a class="btn btn-success"
+                                    href="{% url 'dashboard:activate_user' user.pk %}">Activate</a></span>
+                            {% endif %}
+            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+            
+                
+       
+    </div>
+</section>
+   
+{% endblock content %}
+    

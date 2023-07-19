@@ -1,0 +1,132 @@
+{% extends 'home/header.html' %}
+{% load static %}
+
+
+
+{% block title %}
+    {{category.name}}
+{% endblock title %}
+
+
+
+{% block content %}
+<head>
+    <style>
+        .project-container{
+            width: 80%;
+            height: 400px;
+            margin: auto;
+            text-align: center;
+        }
+      .project-img{
+          height: 60%;
+          width: 60%;
+          object-fit: contain;
+      }
+    </style>
+    
+</head>
+
+
+<div id="content">
+<div id="category" class="row" >
+    <div class="span12">
+        <div class="container" data-aos="fade-up" data-aos-duration="1000">
+            <h1 class="center text-muted">{{category.name}} <span style="padding-top: 20px; display: block;"><a
+                        class="btn btn-black text-muted" href="{% url 'studio:new_project' category.pk %}">Create A New
+                        Project</a></span><span>{% if category.image %}
+                    <img class="project-image" src="{{category.image.url}}" alt="">
+                    {% endif %}</span></h1>
+        
+            {% if category.category_info %}
+            <div class="accordion" >
+                <a class="accordion-item" style="color: #eee;" href="">Info</a>
+                <div class="accordion-item-content">
+                    <p style="color: #eee;">
+                        {{category.category_info}}
+                    </p>
+                    
+                </div>
+            </div>
+            {% endif %}
+        
+        </div>
+        
+        
+        <hr>
+        {% if category.projects.count > 0 %}
+        <div class="wrapper">
+        
+            {% for project in category.projects.all %}
+            <div class="project-container ">
+                
+                {% if project.image %}
+               <a href="{{project.get_absolute_url}}"><img class="project-img" src="{{project.image.url}}" alt=""></a>
+                {% endif %}
+                <h5 class="center">{{project.owner.get_full_name}}</h5>
+              
+        
+            </div>
+            {% endfor %}
+        
+        
+        
+        </div>
+        
+        {% else %}
+        <div class="container">
+            <h4>Sorry. There are no projects in <strong>{{category.name}}</strong>
+        
+            </h4>
+            <p>Please come back later to see updates. Thanks</p>
+        
+            <h6 ><i class="fa fa-arrow-circle-down"> </i>Check Other Disciplines Below<i
+                    class="fa fa-arrow-circle-down"> </i></h6>
+        </div>
+        
+        {% endif %}
+
+
+    </div>
+    
+</div>
+
+
+
+<section id="other-categories" style="margin: 100px auto;">
+    <div class="container headline" data-aos="zoom-in" data-aos-duration="1000">
+        <div class="headline">
+            <h1>
+                Other Categories
+            </h1>
+        </div>
+        
+        <hr>
+        <div style="display: block;">
+            {% for cat in other_categories %} 
+                <a style="margin: 0 0 0.5px 0.5px;" class="btn btn-black " href="{{cat.get_absolute_url}}" >{{cat.name}}</a>
+           
+            {% endfor %}
+        </div>
+       
+    </div>
+</section>
+</div>
+
+
+
+{% endblock content %}
+
+
+{% block javascript %}
+
+<script>
+    $(function () {
+            $(".accordion .accordion-item").removeClass('active').next("div").slideUp("slow");
+
+        })
+</script>
+    
+{% endblock javascript %}
+    
+    

@@ -1,0 +1,251 @@
+{% extends 'home/header.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+
+{% block title %}
+    
+{% endblock title %}
+
+
+{% block content %}
+<head>
+    <style>
+        #review-form  label{
+            display: none;
+        }
+    </style>
+</head>
+<div id="content">
+
+
+<div class="container center headline" data-aos="fade-down" data-aos-duration="1000">
+    <h1>{{product.name}} <span style="margin-left: 30px; font-size: 14px;">{{product.reviews.count}} Review{{product.reviews.count|pluralize}}</span></h1>
+</div>
+    <!-- /// CONTENT  /////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+
+                <div class="product">
+
+
+                    <div class="summary entry-summary">
+
+                        <h3>
+                            <small><span><a style="color: #eee;" href="{{product.product_category.get_absolute_url}}">{{product.product_category.name}}</a></span> / {{product.name}} </small>
+                            Stock: {{product.stock}}
+                        </h3>
+                        
+                        {% if product.image %}
+                            <img src="{{product.image.url}}" alt="" style="width:80%" height="80%">
+                        {% endif %}
+                        
+                        {% if product.product_images %}
+                            <div class="images">
+
+                                    <ul id="simple" class="owl-carousel" style=" height: 400px; width: 100%; margin: auto;">
+                                    
+                                    
+                                        {% for item in product.product_images.all %}
+                                    
+                                        <li style="list-style: None;">
+                                      <img src="{{itemimage.url}}" alt="" style="height: 100px; width: 100px;">                                     
+                                        </li>
+                                        {% endfor %}
+                                    
+                                    
+                                    </ul>
+            
+                            </div>
+                        {% endif %}
+                            
+                            
+                            <div class="container">
+                                <h3>{{product.description}} </h3>
+                            </div>
+                       
+
+                       
+
+                       
+                        <div class="container">
+
+                            <h3 class="widget-title">Tags</h3>
+
+                            <div class="container">
+                                <div class="wrapper">
+                                    
+                                    {% for tag in product.tags.all %}
+                                        <a class="btn btn-white" href="{% url 'shop:tagged_products' tag %}">{{tag}}</a>
+                                    {% endfor %}
+                                        
+                                </div>
+                                
+                            </div><!-- end .tagcloud -->
+
+                        </div><!-- end .widget_tag_cloud -->
+
+                        <h3 class="price">Price: {{product.price}}</h3>
+
+                        <form  action="{% url 'cart:cart_add' product.id %}" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{cart_product_form|crispy}}
+                            <input class="btn btn-white" type="submit" value="Add To Cart">
+                        </form>
+                        
+
+                        <div class="social-media">
+
+                            <a class="social-icon facebook-icon" href="#">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                            <a class="social-icon twitter-icon" href="#">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                            <a class="social-icon googleplus-icon" href="#">
+                                <i class="fa fa-google-plus"></i>
+                            </a>
+                            <a class="social-icon linkedin-icon" href="#">
+                                <i class="fa fa-linkedin"></i>
+                            </a>
+                            <a class="social-icon pinterest-icon" href="#">
+                                <i class="fa fa-pinterest"></i>
+                            </a>
+
+                        </div>
+
+                    </div><!-- end .summary -->
+
+                </div><!-- end .product -->
+
+                <div class="woocommerce-tabs">
+
+                    <div class="tabs-container">
+
+                        <ul class="tabs-menu fixed" >
+                            <li >
+                                <a class="btn btn-white" href="#content-tab-1-1">Product Information</a>
+                            </li>
+                            <li>
+                                <a class="btn btn-white"
+                                href="#content-tab-1-2">Reviews</a>
+                            </li>
+                        </ul><!-- end .tabs-menu -->
+
+                        <div class="tabs" style="color: #1c1c1c;">
+
+                            <div class="tab-content" id="content-tab-1-1" style="color: #1c1c1c;">
+
+                                <h3>Product Information</h3>
+
+                                <p style="">{{product.product_info}}</p>
+
+                            </div><!-- end .tab-content -->
+
+                            <div class="tab-content" id="content-tab-1-2">
+
+                                <h3>{{product.reviews.count}} Review{{product.reviews.count|pluralize}} </h3>
+                                <div class="container1">
+                                    <form id="review-form" action="{% url 'shop:review_product' product.id %}" method="POST">
+                                        {% csrf_token %}
+                                        {{review_form|crispy}}
+                                        <input type="submit" value="Review this product">
+                                    </form>
+                                </div>
+
+                                <div class="container1">
+                                    <ul>
+                                        
+                                        {% for item in product.reviews.all %}
+                                        
+                                        <div class=" accordion">
+                                            <a class="accordion-item" href="">{{item.author.get_full_name}}</a>
+                                            <div class="accordion-item-content">
+                                                <h5>{{item.review}}</h5>
+                                                <blockquote>{{item.created}}</blockquote>
+                                            </div>
+                                            
+                                            
+                                        </div>
+                                           
+                                        {% endfor %}
+                                            
+                                    </ul>
+                                </div>
+                                
+                             
+                            </div><!-- end .tab-content -->
+
+                        </div><!-- end .tabs -->
+
+                    </div><!-- end .tabs-container -->
+
+                </div><!-- end .woocommerce-tabs -->
+
+            </div><!-- end .span12 -->
+        </div><!-- end .row -->
+    </div><!-- end .container -->
+
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+                
+                {% if related_products %}
+                <div class="headline">
+                
+                    <h1>Related Products</h1>
+
+                <div class="wrapper">
+                    
+                    {% for product in related_products %}
+                    <div class="project-container">
+                        <li class="product">
+                        
+                            <a href="{{product.get_absolute_url}}">
+                        
+                                {% if product.image %}
+                                <img class="project-image" src="{{product.image.url}}" alt="">
+                                {% endif %}
+                        
+                        
+                        
+                                <h4>
+                                    <small>Stock:</small>
+                                    {{product.stock}}
+                                </h4>
+                        
+                                <h5 class="price">price: {{product.price}}</h5>
+                        
+                            </a>
+                           
+                        
+                            <a class="btn add_to_cart_button" href="{{product.get_absolute_url}}">See More</a>
+                        
+                        </li>
+                    </div>
+                    
+                    {% endfor %}
+                        
+                    
+                   
+                </div>
+                
+                </div><!-- end .hedline -->
+                {% endif %}
+                    
+
+
+            </div><!-- end .span12 -->
+        </div><!-- end .row -->
+    </div><!-- end .container -->
+    
+
+    <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+</div><!-- end #content -->
+{% endblock content %}
+    
+    

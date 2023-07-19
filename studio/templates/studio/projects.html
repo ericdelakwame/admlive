@@ -1,0 +1,62 @@
+{% extends 'studio/header.html' %}
+{% load static %}
+{% load hitcount_tags %}
+
+
+{% block title %}
+Projects On ADM
+
+{% endblock title %}
+
+
+
+{% block content %}
+
+<div id="content">
+    <div class="sub-headline" >
+        <h1 style="text-align: left; margin-top: 50px;" class="ml-3">Directory</h1>
+        
+    </div>
+
+    
+
+    <div id="projects" class="container1 mt-5">
+
+        {% if projects %}
+        <div class="wrapper">
+
+            {% for project in projects %}
+            <div class="project-container ">
+                <a style="color: #fff;" href="{{project.get_absolute_url}}">
+                    <h4 class="center">{{project.name}} </h4>
+                    <h6>
+                        <span>Views: {% get_hit_count for project %}</span>
+                    </h6>
+                    <h6 class="center">By {{project.owner.get_full_name}}</h6>
+                    {% if project.image %}
+                    <img src="{{project.image.url}}" alt="" class="project-image">
+                    {% endif %}
+
+                    <h4 class="center">{{project.reviews.count}} Review{{project.reviews.count|pluralize}}</h4>
+                </a>
+
+            </div>
+            {% endfor %}
+
+
+        </div>
+
+        {% else %}
+        <div class="container" data-aos="flip-right" data-aos-duration="1000">
+
+            <h2 class="alert warning center">
+                No projects have been uploaded at this time. Please try again later
+            </h2>
+        </div>
+
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock content %}

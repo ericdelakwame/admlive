@@ -1,0 +1,110 @@
+{% extends 'dashboard/header.html' %}
+{% load static %}
+{% load hitcount_tags %}
+
+
+{% block title %}
+Blog Posts
+
+{% endblock title %}
+
+
+
+{% block content %}
+<head>
+    <style>
+        .fit{
+            object-fit: contain;
+        }
+        .wrapper{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .post-container{
+            height: 350px;
+            /* width: 80%; */
+           
+           
+        }
+        .post-image{
+           width: 80%;
+           height: 60%;
+        }
+
+        @media screen and (max-width:800px){
+            .wrapper{
+                display: grid;
+                grid-template-columns: repeat(1, 1fr);
+                gap: 20px;
+                width: 80%;
+               
+                
+            }
+            .post-container{
+                margin: auto;
+                height: 400px;
+                text-align: center;
+                border-bottom: #fff 1px solid;
+                width: 100%;
+            }
+            .post-image {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+   
+    
+</head>
+
+<div id="content">
+    <div class="sub-headline container">
+        <h1 style="text-align: left; margin-top: 50px;">Blog Posts</h1>
+
+    </div>
+
+
+
+    <div id="posts" class="container mt-5" style="margin:auto;">
+
+        {% if posts %}
+        <div class="wrapper">
+
+            {% for post in posts %}
+            <div class="post-container " >
+                <a style="color: #fff;" href="{{post.get_absolute_url}}">
+                    <h6>{{post.heading}}</h6>
+                    <h6>
+                        <span>{{post.comments.count}} Comment{{post.comments.count|pluralize}}</span>
+                    </h6>
+                    <h6><a class="badge badge-outline-light" href="{% url 'dashboard:post_images' post.pk %}">Add Images</a></h6>
+                    <blockquote style="font-size: 10px;">{{post.created}}</blockquote>
+                    
+                    {% if post.image %}
+                    <img class="post-image fit"  src="{{post.image.url}}" alt="" >
+                    {% endif %}
+
+                  <span><a class="badge badge-outline-success" href="{% url 'dashboard:update_post' post.pk %}">Update</a><a class="badge badge-outline-danger" href="{% url 'dashboard:delete_post' post.pk %}">Remove</a></span>
+                </a>
+                    
+            </div>
+            {% endfor %}
+
+
+        </div>
+
+        {% else %}
+        <div class="container" data-aos="flip-right" data-aos-duration="1000">
+
+            <h2 class="alert warning center">
+                No posts have been uploaded at this time. Please try again later
+            </h2>
+        </div>
+
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock content %}

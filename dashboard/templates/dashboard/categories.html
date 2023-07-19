@@ -1,0 +1,75 @@
+{% extends 'dashboard/header.html' %}
+
+{% load static %}
+
+
+{% block title %}
+Categories
+{% endblock title %}
+
+
+
+{% block content %}
+
+<head>
+    <style>
+        a {
+            color: #fff;
+        }
+
+        #project-categories {
+            width: 80%;
+            margin: 30px auto;
+        }
+
+        .table * {
+            overflow-x: auto;
+            padding: 10px;
+            font-family: 'Prata', sans-serif;
+
+        }
+
+        .table td,
+        .table th {
+            border: #fff 1px solid;
+        }
+
+        a {
+            color: #fff;
+        }
+    </style>
+</head>
+<section id="project-categories">
+    <div id="content">
+        <div class="row">
+            <h1 style="margin: 50px auto; width: 80%; text-align: center;">Categories</h1>
+        </div>
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Details</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for category in categories %}
+                    <tr>
+                        <td>{{category.name}}</td>
+                        
+                        <td><a style="color: #fff;" href="{% url 'dashboard:category_detail' category.pk %}">Details</a>
+                        </td>
+                        <td><a href="{% url 'dashboard:update_category' category.pk  %}">Update Category</a></td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

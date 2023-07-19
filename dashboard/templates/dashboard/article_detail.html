@@ -1,0 +1,245 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+{{article.heading}}
+{% endblock title %}
+
+
+
+{% block content %}
+
+<head>
+    <style>
+        #content{
+            margin: 50px auto;
+        }
+    </style>
+</head>
+<section id='article-detail'>
+    <div id="content">
+
+        <!-- /// CONTENT  /////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+        <div class="container">
+            <div class="row">
+                <div class="span9">
+
+                    <div class="blog-post">
+
+                        {% if article.image %}
+                        <div class="blog-post-thumb">
+
+                            <img src="{{article.image.url}}" alt="">
+
+                        </div><!-- end .blog-post-thumb -->
+                        {% endif %}
+
+
+
+                        <div class="blog-post-title">
+
+                            <h6>{{article.created}}</h6>
+
+                            <h2>{{article.heading}}</h2>
+
+                            a <h6>
+                                by
+                                <a href="#">{{article.author.get_full_name}}</a> |
+                               
+                                <a href="#">{{article.comments.count}} Comment{{article.comments.count|pluralize}}</a>
+                            </h6>
+
+                        </div><!-- end .blog-post-title -->
+
+                        <div class="blog-post-info">
+
+                            <p> {{article.content}} </p>
+
+                        </div><!-- end .blog-post-info -->
+
+                        <br>
+
+                        {% if articles.post_images %}
+                        <div class="blog-post-thumb">
+
+                            <img src="content/blog/1170x1800.jpg" alt="">
+
+                        </div><!-- end .blog-post-thumb -->
+
+                        {% endif %}
+
+
+                        <div class="blog-post-info">
+
+                            <p></p>
+
+                            <blockquote>
+
+                                <h4 class="mute"><em>{{article.subheading}} </em></h4>
+
+                            </blockquote>
+
+                            <h3 class="text-center text-uppercase">The end</h3>
+
+                        </div><!-- end .blog-post-info -->
+
+                    </div><!-- end .blog-post -->
+
+
+
+                    <div id="comments" class="comments-area">
+
+                        <h3 class="comments-title">{{article.comments.count}}
+                            Comment{{article.comments.count|pluralize}}</h3>
+                        {% if article.comments %}
+                        <ol class="commentlist">
+
+                            <ul class="children">
+
+                                {% for comment in article.comments.all %}
+                                <li class="comment even depth-2">
+
+                                    <div class="comment-body">
+
+                                        <div class="comment-author vcard">
+
+                                            {% if comment.author.photo %}
+                                            <img width="80" height="80" class="avatar avatar-32 photo"
+                                                src="{{comment.author.photo.url}}" alt="">
+                                            {% endif %}
+
+
+                                            <cite class="fn"><a class="url" rel="external nofollow" href="#"
+                                                    style="color: #fff;">{{comment.author.get_full_name}}</a></cite>
+                                            <span class="says">says:</span>
+                                        </div>
+
+                                        <div class="comment-meta commentmetadata ">
+                                            <a href="#" style="color: #fff;">{{comment.created}}</a>
+                                        </div>
+
+                                        <p>{{comment.message}}</p>
+
+                                        <div class="reply">
+                                            <a href="#" class="comment-reply-link">reply</a>
+                                        </div>
+
+                                    </div>
+
+                                </li>
+                                {% endfor %}
+
+                            </ul><!-- end .children -->
+
+                        </ol>
+
+
+                        {% endif %}
+
+                        <nav id="comment-nav-below" class="navigation" role="navigation">
+                            <h3 class="assistive-text section-heading">Leave a comment</h3>
+                        </nav>
+
+                        <div id="respond" class="comment-respond">
+
+                            <form action="#" method="post" id="commentform" class="comment-form fixed">
+                                {% csrf_token %}
+
+
+                                <p class="comment-form-comment">
+                                    {{comment_form|crispy}}
+                                </p>
+
+                                <p class="form-submit">
+                                    <input class="btn" name="submit" type="submit" id="submit" value="Send">
+                                </p>
+
+                            </form>
+
+                        </div>
+
+                    </div><!-- #comments .comments-area -->
+
+                </div><!-- end .span9 -->
+                <div class="span3">
+
+                    <div class="widget widget_search">
+
+                        <form action="#" class="searchform" id="searchform" method="get" name="searchform">
+                            <div>
+                                <label class="screen-reader-text" for="s">Search for:</label>
+                                <input id="s" name="s" type="text" placeholder="enter keyword here...">
+                                <input id="searchsubmit" type="submit" value="">
+                            </div>
+                        </form>
+
+                    </div><!-- end .widget_search -->
+
+                    <div class="widget widget_categories">
+
+                        <h3 class="widget-title">Project Categories</h3>
+
+                        <ul>
+                            
+                            {% for cat in categories  %}
+                            <li class="cat-item">
+                                <a href="{{cat.get_absolute_url}}" title="View all posts filed under Personal">{{cat.name}}</a>
+                            </li>
+                            {% endfor %}
+                                
+                           
+                        </ul>
+
+                    </div><!-- end .widget_categories -->
+
+                    <div class="widget widget_archive">
+
+                        {% if other_articles %}
+                        <h3 class="widget-title">Archives</h3>
+                        {% endif %}
+
+
+
+                        <ul>
+
+                            {% for article in other_articles %}
+                            <li>
+                                <a href='{{article.get_absolute_url}}'>{{article.created|date:'Y-m-d'}}</a>
+                            <li>
+                                {% endfor %}
+
+
+                        </ul>
+
+                    </div><!-- end .widget_archive -->
+
+                    <div class="widget ewf_widget_facebook">
+
+                        <h3 class="widget-title">Facebook</h3>
+
+                        <div class="fb-follow" data-href="https://www.facebook.com/zuck" data-colorscheme="light"
+                            data-layout="standard" data-show-faces="true"></div>
+
+                    </div><!-- end .widget_text -->
+
+                </div><!-- end .span3 -->
+            </div><!-- end .row -->
+        </div><!-- end .container -->
+
+        <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+    </div><!-- end #content -->
+</section>
+
+{% endblock content %}
+
+
+
+{% block footer %}
+    <div class="copyright" style="width: 100%;">
+        <h2>African Design <small>Matters</small></h2>
+    </div>
+{% endblock footer %}
+    

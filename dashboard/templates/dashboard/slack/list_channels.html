@@ -1,0 +1,64 @@
+{% extends 'dashboard/header.html' %}
+{% load static %}
+
+
+{% block title %}
+List Of ADM Channels On Slack 
+    
+{% endblock title %}
+
+
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+        <div class="card-body">
+            <div class="container">
+                <h2 class="card-heading">
+                    List Of Channels On ADM Slack App
+                </h2>
+                <div class="container" style="display: flex; margin: 10px;">
+                {% for channel in conversations %}
+                <a class="btn btn-outline-light" href="{% url 'adm_slack:channel_members' channel.id %}">{{channel.name}}</a>
+                {% endfor %}
+                </div>
+                
+                    
+
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+    
+
+    <div class="row">
+        
+        <div class="col-12">
+            
+            {% if channel %}
+                <div class="container">
+                    <h2 class="card-title">{{channel.id}}</h2>
+
+                    <div>
+                        <table class="table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>Created</th>
+                                    <th>No Of Users</th>
+                                </tr>
+                            </thead>
+
+                        </table>
+                    </div>
+                </div>
+            {% endif %}
+                
+        </div>
+       
+    </div>
+{% endblock content %}
+    
+    
+

@@ -1,0 +1,45 @@
+{% extends 'dashboard/header.html' %}
+
+
+
+{% block title %}
+{{press.content}}
+    
+{% endblock title %}
+    
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1>Press</h1>
+            <p>Issued On {{press.date}}</p>
+        </div>
+
+        <div class="container">
+            <p>{{press.content|safe}}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+        <div style="display: flex; ">
+            <div>
+                <a class="btn btn-success m-2" href="{% url 'dashboard:update_press' press.pk %}">Update</a>
+            </div>
+            <div>
+                <a class="btn btn-danger m-2" href="{% url 'dashboard:delete_press' press.pk %}">Delete</a>
+            </div>
+        
+        
+        
+        </div>
+            
+        </div>
+    </div>
+</div>
+    
+{% endblock content %}
+    

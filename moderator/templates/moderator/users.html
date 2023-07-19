@@ -1,0 +1,81 @@
+{% extends 'studio/header.html' %}
+{% load static %}
+
+
+{% block title %}Site Users{% endblock title %}
+
+{% block content %}
+<head></head>
+<section id="intro">
+    <div class="table-responsive card-body">
+        <table id="table" class="table table-light">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>User Type</th>
+                    <th>Date Joined</th>
+                    <th>Status</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                
+                {% for user in users %}
+                    <tr class="text-dark">
+                       <td> {{user.get_full_name}}</td>
+                        <td>
+                        
+                            {% if user.is_superuser %}
+                            <span class="badge badge-danger">Admin
+                                {% elif user.is_moderator %}
+                                <span class="badge badge-warning">Moderator
+                                    {% elif user.is_designer %}
+                                    <span class="badge badge-success">Creative
+                                        {% elif user.is_student %}
+                                        <span class="badge badge-info">Student
+                                            {% elif user.is_paragon %}
+                                            <span class="btn btn-danger">Paragon</span>
+                                            {% endif %}
+                        
+                        </td>
+                        <td>{{user.date_joined}}</td>
+                        <td>
+                            
+                            {% if user.activated %}
+                                Activated
+                                {% else %}
+                                Not Activated
+                            {% endif %}
+                                
+                        </td>
+                        <td><a class="badge badge-outline-success" href="{% url 'moderator:user_detail' user.pk %}">Check Details</a></td>
+                    </tr>
+                  
+                        
+                {% endfor %}
+                    
+
+            </tbody>    
+
+        </table>
+    </div>
+</section>
+
+
+{% block javascript %}
+
+<script>
+    $(document).ready(function () {
+        $('#table').DataTable({
+
+        });
+    });
+</script>
+    
+{% endblock javascript %}
+    
+    
+{% endblock content %}
+    
+    

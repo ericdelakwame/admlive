@@ -1,0 +1,184 @@
+{% extends 'home/header.html' %}
+{% load static %}
+
+
+
+{% block title %}
+{{user.get_full_name}}`s Profile
+    
+{% endblock title %}
+    
+    
+    
+        
+   
+    {% block content %}
+
+   
+    <head>
+
+    </head>
+    <div id="content">
+        <div class="headline container">
+            <h1 class="center">
+                
+                {% if profile.logo %}
+                <span><img style="width: 80px; height: 80px; border-radius: 50%; margin-right: 20px; margin-top: 10px; display: inline;"
+                        src="{{profile.logo.url}}" alt=""></span>
+                {% endif %}
+                    
+                {{user.get_full_name}}</h1>
+            
+            {% if not user == request.user %}
+                <span style="display: block;"><a class="btn btn-white" href="{% url 'accounts:connect_user' user.pk %}">Connect With
+                        {{user.first_name.title}}</a></span>
+            {% endif %}
+                
+            <hr>
+            <h2 class="center">Company: {{user.profile.company_name}}</h2>
+            <hr>
+            
+            {% if profile.banner %}
+            <div class="container1 center" style="width: 100%; height: 250px;">
+                <img src="{{profile.banner.url}}" alt="" style="height: 250px; width: 80%;">
+            </div>
+                
+            {% endif %}
+                
+        </div>
+
+
+{% if user.profile %}
+<div class="row" style="margin: auto;">
+<div class="span6" >
+    <h2><span class="btn-black">Bio</span></h2>
+    <p>
+        {% if user.profile.bio %}
+        {{user.profile.bio}}
+        {% endif %}
+    </p>
+    <h4>Specialty:</h4>
+    <blockquote>{% for value in user.profile.specialty.all %}
+    <a  href="{{value.get_absolute_url}}" class="btn btn-black">{{value}}</a>
+    {% endfor %}</blockquote>
+</div>
+
+<div class="span6">
+    <h4 ><span class="btn-black">About</span></h4>
+    <h4>{{user.profile.about}}</h4>
+    
+    <h4><span class="btn-black">Contact</span></h4>
+    <h6>Tel No: {{user.tel_no.as_e164}}</h6>
+    <h6>Email: {{user.email}}</h6>
+   
+</div>
+
+</div>
+{% endif %}
+
+<div class="row" style="margin: 50px auto;">
+    <div class="span12">
+        
+        {% if user.projects %}
+        <div class="headline" data-aos="flip-left" data-aos-duration="1000">
+            <h2>{{user.get_full_name}}`s projects</h2>
+        </div>
+
+        <div class="wrapper">
+            
+            {% for project in user.projects.all %}
+            <div class="project-container">
+
+            <h4 class="center">Name: {{project.name}}</h4>
+            
+            {% if project.image %}
+            <a href="{{project.get_absolute_url}}">
+                <img src="{{project.image.url}}" alt="" class="project-image">
+            </a>
+           
+            <h5 class="center"><a class="btn btn-white" href="{{project.get_absolute_url}}">See More</a></h5>
+                
+            {% endif %}
+                
+            </div>
+            {% endfor %}
+                
+           
+        </div>
+           
+        {% endif %}
+            
+    </div>
+</div>
+
+
+<div class="row" style="margin-top: 30px;">
+    <div class="span12">
+        <div id="location" style="margin: 40px auto;">
+            <h4 class="alert">Where To Find Me</h4>
+            <div id="map" style="width: 60%; height: 300px;margin: 50px auto;">
+        
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+    
+        
+    {% endblock content %}
+        
+
+{% block javascript %}
+
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDOpEeYV2V0k_EZVpRpbfeUAiQqQcwLIA&callback=initMap">
+    </script>
+
+<script>
+    var map;
+    var bounds;
+    var userId = '{{user_id}}';
+
+    function initMap(){
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 5,
+            mapTypeControl: false,
+        })
+        bounds = new google.maps.LatLngBounds();
+        $.ajax({
+            method: 'get',
+            url: '/api/accounts/users/'+userId,
+            success: function(user){
+                // alert(user.first_name)
+                getUser(user);
+            }
+        })
+
+        function getUser(user){
+            var userLoc = new google.maps.LatLng({
+                lat: user.location.coordinates[1],
+                lng: user.location.coordinates[0]
+            })
+            bounds.extend(userLoc)
+            var marker = new google.maps.Marker({
+                map: map,
+                position: userLoc,
+                title: user.first_name,
+                label: user.first_name+' '+user.last_name,
+                animation: google.maps.Animation.BOUNCE
+
+            })  
+            map.panTo(userLoc);
+            map.setZoom(11);
+            console.log(userLoc)
+        }
+
+    }
+</script>
+    
+
+{% endblock javascript %}
+    

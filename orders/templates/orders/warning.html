@@ -1,0 +1,32 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+
+
+
+{% block title %}
+    Multiple Vendors
+{% endblock title %}
+
+
+
+{% block content %}
+
+<div id="warning">
+    <div class="container">
+        <h1 class="health-color center">Multiple Branches Chosen</h1>
+    </div>
+
+    <div class="content">
+        <p>
+            Please note you have chosen multiple branches.
+            You may go back to your cart to ensure all products are from the same branch. Thanks.
+
+        </p>
+        <a class="btn1" href="{% url 'cart:cart_detail' %}">Back To cart</a>
+    </div>
+</div>
+    
+{% endblock content %}
+    
+    

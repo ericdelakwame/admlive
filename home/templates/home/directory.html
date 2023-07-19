@@ -1,0 +1,360 @@
+{% extends 'home/header.html' %}
+{% load static %}
+
+
+{% block title %}
+    Directory: African Design Matters    
+{% endblock title %}
+
+
+
+{% block content %}
+<head>
+    <style>
+        .c1{
+            float: left;
+        }
+        .c2{
+            float: right;
+        }
+        .c2 h6{
+            margin-top: 0;
+        }
+        #user-projects{
+            float: none;
+        }
+        @media screen and (max-width:600px) {
+            .accordion{
+                width: 100%;
+                margin: auto;
+            }
+            .c1, .c2{
+                
+                margin: auto;
+                width: 100%;
+            }
+            .c1{
+                float: left;
+            }
+            .c2{
+                float: right;
+                text-align: right;
+                padding: 0;
+                margin: auto;
+            }
+            .c2 h6{
+               
+                text-align: right; 
+                border-bottom: #fff 1px solid; 
+                padding: 10px 0 10px 10px;
+                position: relative;
+                margin: auto;
+
+
+                   
+
+            }
+            .project-container{
+                width: 100%;
+                
+            }
+        }
+    </style>
+</head>
+
+<div id="content">
+    
+<!-- End Top Divide -->
+
+<!--Categories  Buttons-->
+    <div id="row" style="margin: 80px auto;">
+        <div class="span12">
+            <div class="subheadline">
+                <h1>Directory </h1>
+            
+            </div>
+            {% if categories %}
+            <div style="width: 100%; padding: 3px;float: left;">
+                
+            {% for cat in categories %}           
+            <a class="btn btn-black"  href="{% url 'home:directory_category' cat.pk  %}" style="margin-left: 0;">{{cat.name}}</a>
+            
+            {% endfor %}
+                
+            </div>
+            {% endif %}
+        </div>
+        
+    </div>
+<!-- End Categories -->
+
+<!-- Users  -->
+    <div class="row" style="margin: 50px auto; width: 100%">
+        <div class="span12">
+            <hr>
+        {% if users %}
+        {% for user in users %}
+        
+        <div class="accordion" style="width: 100%;margin: 0;border-bottom: #eee 0.1px solid; padding: 0;height: fit-content;">
+        <a class="accordion-item" style="color: #eee; position: relative;" href=""><span style="display: inline-block;width: 150px; vertical-align: bottom;">{{user.get_full_name}}</span>
+        <span style="width: 100px;position: relative;margin-left: 30%;display: inline-block;">
+            instagram
+        </span>
+            <span style="position: relative;right: 10px;float: right;vertical-align: top; display: inline-block;">
+                {{user.country}}
+            </span>
+            
+      
+       
+        </a>
+            
+       
+<!--         
+                <a id="{{user.username}}"   style="color: #eee;display: flex; justify-content:space-around;width: 100%;flex-flow: row;" href="" class="accordion-item" >{{user.get_full_name}}
+                <span>
+                    instagram
+                </span>
+                <span>{{user.country}}</span>
+                </a>
+                 -->
+                
+            {% if user.projects %}
+            <div class="accordion-item-content" id="user-projects">
+                <div>
+                <div class="c1" style="width: 50%;">
+                    <ul id="simple" class="owl-carousel" style=" height: 300px; width: 100%; margin: auto;">
+                        {% for project in user.projects.all %}
+                        <li style="list-style: none;">
+                            
+                            <div class="project-container" style="height: 300px;">
+                                <h6>{{user.first_name}}</h6>
+                                {% if user.photo %}
+                                <img class="project-image" src="{{user.photo.url}}" alt="" style="height: 80%;">
+                                {% endif %}
+                            </div>
+
+                        </li>
+                
+                        <li style="list-style:none;">
+                            <div class="container">
+                
+                                <a style="color: #fff;" href="{{project.get_absolute_url}}">
+    
+                                    <div class="project-container "
+                                        style="background-color: #000000; color: #fff; text-align: left;height: 300px;">
+                
+                                        <h4 style="text-align: center;">{{project.name}}</h4>
+                                        {% if project.image %}
+                                        <img class="project-image" src="{{project.image.url}}" alt="">
+                                        {% endif %}
+                
+                
+                                    </div>
+                                </a>
+                            </div>
+                        </li>
+                
+                
+                
+                
+                        {% endfor %}
+                
+                    </ul>
+                </div>
+                <div class="c2" style="width: 50%;">
+                    <h6><a style="color: #fff;"  href="{% url 'accounts:user_profile' user.pk %}">{{user.profile.bio|truncatewords:20}} <span style="font-size: smaller;">About {{user.first_name}}</span></a></h6>
+                </div>
+                </div>
+                
+                
+             
+            </div>
+            {% endif %}
+
+        </div>
+        {% endfor %}
+        {% elif category %}
+        <div class="accordion" style="width: 100%;">
+        
+        
+            <a id="{{user.username}}" style="color: #eee; width: 100%;" href="" class="accordion-item">{{category.name}}
+            </a>
+            {% if category.projects %}
+            <div class="accordion-item-content">
+        
+                <div class="c1" style="width: 50%;">
+                    <ul id="simple" class="owl-carousel" style=" height: 300px; width: 100%; margin: auto;">
+                        {% for project in category.projects.all %}
+        
+                        <li style="list-style: none;">
+                            <div>
+        
+                                <a style="color: #fff;" href="{{project.get_absolute_url}}">
+        
+                                    <div class="project-container"
+                                        style="background-color: #000000; color: #fff; text-align: left;height: 300px; ">
+        
+                                        <h4 style="text-align: center;">{{project.name}}</h4>
+                                        {% if project.image %}
+                                        <img class="project-image" src="{{project.image.url}}" alt="">
+                                        {% endif %}
+        
+                                        <h5>{{project.owner}}</h5>
+                                    </div>
+                                </a>
+                            </div>
+                        </li>
+        
+        
+        
+        
+                        {% endfor %}
+        
+                    </ul>
+                </div>
+                <div class="c2" style="width: 50%;">
+                    <h6 style="padding-top: 100px;"><a style="color: #fff;" href="{{category.get_absolute_url}}">
+                            <span style="font-size: medium;">{{category.category_info|truncatewords:20}}</span></a></h6>
+                </div>
+        
+        
+            </div>
+            {% endif %}
+        
+        </div>
+        {% endif %}
+
+        </div>             
+    </div>
+<!-- End Users -->
+<!-- Category -->
+<div class="row">
+    <div class="span12">
+
+        
+    </div>
+</div>
+<!-- End Category -->
+</div>
+    
+{% endblock content %}
+    
+
+
+{% block javascript %}
+
+<script>
+    $(function () {
+        $(".c-name").hide();
+        $(".c-label").hide();
+        $("#direct").hide();
+        $(".direct-label").hide();
+    })
+
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('.owl-carousel').owlCarousel({
+            autoplay: true,
+            autoplayTimeout: 2000,
+            autoplayHoverPause: true,
+            loop: true,
+            margin: 10,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: true,
+                    loop: true
+                },
+                600: {
+                    items: 1,
+                    nav: true,
+                    loop: true,
+
+                },
+                1000: {
+                    items: 1,
+                    nav: true,
+                    loop: true,
+                    margin: 20
+                }
+            }
+        })
+    })
+</script>
+
+<script>
+$(function(){
+    $('html, body').animate({
+        scrollTop: $("#directory").position.top
+    }, 4000);
+})
+
+    
+   
+
+
+    function getUser(name) {
+        
+        $("#dir-search").change(function (e) {
+             e.preventDefault();
+           	$('#'+name).click(function () {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                return false;
+            });
+           
+           
+            
+        });
+    }
+
+    
+</script>
+
+<script>
+    $(function(){
+        var elems = new Array();
+
+        $.ajax({
+            url: '/api/accounts/users',
+            method: 'GET',
+            dataType: 'json',
+            success: function(users){
+               listUsers(users);
+            }
+        })
+
+
+        function listUsers(users){
+            $.each(users, function(i, user){
+               
+                elems.push(user.first_name)
+                
+            })
+            
+            $("#dir-search").autocomplete({
+                source: elems,
+            })
+
+
+        }
+       
+    })
+</script>
+
+<script>
+
+    $(function () {
+        $(".accordion .accordion-item").removeClass('active').next("div").slideUp("slow");
+        
+    })
+</script>
+
+
+    
+{% endblock javascript %}
+    
+    

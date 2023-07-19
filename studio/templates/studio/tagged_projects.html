@@ -1,0 +1,62 @@
+{% extends 'home/header.html' %}
+{% load static %}
+
+{% block title %}
+    
+{% endblock title %}
+    
+
+
+{% block content %}
+<head>
+    <style>
+        .project-container {
+            width: 80%;
+            height: 400px;
+            margin: auto;
+        }
+    
+        .project-img {
+            height: 60%;
+            width: 60%;
+            object-fit: contain;
+        }
+    </style>
+
+</head>
+<div id="content" >
+
+    <div class="headline">
+        <h1 >Projects tagged with {{tag}}</h1>
+    </div>
+
+    <div class="container">
+        <div class="wrapper">
+            
+            {% for project in projects %}
+                <div class="project-container" >
+                    
+                    
+                    {% if project.image %}
+                    <a href="{{project.get_absolute_url}}">
+                        <img class="project-img" src="{{project.image.url}}" alt="">
+                    </a>
+                       
+                    {% endif %}
+                    <h5>{{project.name}}</h5>
+                    <h5>{{project.owner.get_full_name}}</h5>
+
+                        
+                </div>
+            {% endfor %}
+                
+        </div>
+    </div>
+    
+    
+        
+</div>
+{% endblock content %}
+    
+
+    

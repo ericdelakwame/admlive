@@ -1,0 +1,122 @@
+{% extends 'home/header.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block title %}
+New Order
+{% endblock title %}
+
+
+
+{% block content %}
+
+<head>
+    
+    {% block jquery %}
+    <script src="{% static 'home/jquery/jquery-3.6.0.min.js' %}"></script>     
+    {% endblock jquery %}
+        
+   
+    <script src="{% static 'home/jquery-ui/jquery-ui.js' %}"></script>
+    <script src="{% static 'home/jquery-ui/jquery.timepicker.min.js' %}"></script>
+    <style> 
+    #header-wrap  {
+        /* z-index: 1000;
+        position: fixed;
+        top: 0;
+        overflow: auto; */
+    }
+     
+        #order-details{
+            margin: 50px auto;
+            width: 80%;
+        }
+        #map{
+            width: 80%;
+            height: 400px;
+            margin: auto;
+        }
+       
+    </style>
+   <link rel="stylesheet" href="{% static 'home/jquery-ui/jquery.timepicker.min.css' %}">
+</head>
+<!-- <section style="min-height: 250px;"></section> -->
+<section id="main">
+    <div class="table container1">
+        <div class="headline" style="background-color: #1c1c1c;">
+            <h1 class="center" style="font-size: 20px;  color: #eee; ">Items In Your Order </h1>
+        </div>
+        <table style="overflow-x: auto;">
+            <thead>
+                <tr class="center">
+                    <th>Image</th>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Vendor</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for item in cart %}
+                <tr class="center">
+                    
+                    {% if item.product.image %}
+                    <td><img  src="{{item.product.image.url}}" alt="" width="80px" height="70px"></td>
+                    {% endif %}
+
+
+                    <td>{{item.product.name}}</td>
+                    <td>{{item.product.price}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td>{{item.product.vendor.get_full_name}}</td>
+                </tr>
+                <hr>
+
+                {% endfor %}
+              
+            </tbody>
+
+        </table>
+        <h2 class="center ">
+            Total: Ghs {{ cart.get_total_price }}
+
+        </h2>
+
+    </div>
+</section>
+<hr>
+<section id="order-details">
+    <div class="container1 ">
+        <h1 >
+            Your Details
+        </h1>
+      <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+          <div class="container">
+           
+            {{form.media}}
+            {{form|crispy}}
+            <button class="btn btn-black" type="submit">
+                Order
+            </button>
+          </div>
+         
+      </form>
+    </div>
+</section>
+{% endblock content %}
+
+
+{% block javascript %}
+
+
+<script>
+    $(function(){
+        $(".datepicker").datepicker()
+    })
+</script>
+    
+{% endblock javascript %}
+    

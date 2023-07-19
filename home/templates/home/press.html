@@ -1,0 +1,31 @@
+{% extends 'home/header.html' %}
+
+
+{% block title %}
+Press
+    
+{% endblock title %}
+    
+
+    
+    {% block content %}
+   <div id="content">
+        <div class="row">
+            <div class="span12">
+                
+        
+                <div class="container">
+                    <div class="headline">
+                        <h1>Press</h1>
+                    </div>
+                    {% for item in press %}
+                    <h5>{{item.content|safe}}</h5>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+   </div>
+    
+        
+    {% endblock content %}
+        

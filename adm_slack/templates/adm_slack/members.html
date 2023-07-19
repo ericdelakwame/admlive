@@ -1,0 +1,27 @@
+{% extends 'studio/header.html' %}
+{% load static %}
+
+
+
+{% block title %}
+
+Members in {{channel.name}}
+    
+{% endblock title %}
+
+
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        
+        {% for member in members %}
+            <a class="btn btn-light" href="{% url 'adm_slack:slack_user_detail' member %}">{{member}}</a>
+        {% endfor %}
+            
+    </div>
+</div>
+    
+{% endblock content %}
+    
+    

@@ -1,0 +1,61 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+
+
+{% block title %}
+    Your Order Has Been Received
+{% endblock title %}
+
+
+
+{% block content %}
+
+<head>
+<link rel="stylesheet" href="{% static 'orders/css/created.css' %}">
+</head>
+
+<section id="created">
+    <div class="container">
+        <h1 class="heading">Your Order: Order No: {{order.id}} has been received, and is being processed. </h1>
+        <p>
+            You will be notified when processing is complete. Thanks for shopping at <span class="gas-color">AMTABIZ</span> 
+        </p>
+        <div class="backtoshop">
+            <a href="{% url 'shop:index' %}">Back To The Shop</a>
+        </div>
+
+       
+    </div>
+</section>
+    
+<section id="order-items">
+    <div class="container">
+        <h1 class="highlight">Items in Order</h1>
+    </div>
+
+    <div class="container">
+        <div class="wrapper">
+            
+            {% for item in order_items.all %}
+                <div class="content">
+                    <h4 class="gas-color">Item: {{item.product.name}}</h4>
+                    
+                    {% if item.product.image %}
+                        <div class="image-container">
+                            <img class="fit" src="{{item.product.image.url}}" alt="">
+                        </div>
+                    {% endif %}
+                        
+                    <h4>Price: {{item.product.price}}</h4>
+                    <h6>Branch: {{item.product.branch.branch_name}}</h6>
+                    <h6>Qty: {{item.quantity}}</h6>
+                </div>
+            {% endfor %}
+                
+        </div>
+    </div>
+</section>
+{% endblock content %}
+    
+    

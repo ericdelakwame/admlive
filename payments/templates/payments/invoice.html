@@ -1,0 +1,80 @@
+{% extends 'home/header.html' %}
+{% load static %}
+
+
+
+{% block title %}
+Invoice: Order No {{order.id}}
+    
+{% endblock title %}
+
+
+
+{% block content %}
+<head>
+    <style>
+        #header, #nav1{
+            display: none;
+        }
+    </style>
+</head>
+
+<section id="your-details">
+    
+    
+    <div class="container">
+
+        <h2>Your Details</h2>
+        <h4>{{order.first_name}} {{order.last_name}}</h4>
+        Email: {{order.email}}</h4>
+        <h4>Tel: {{order.tel_no}}</h4>
+        <h4>Date: {{order.created|date:'d/M/Y'}}</h4>
+    </div>
+</section>
+
+<section id="invoice-heading">
+    <div class="container headline">
+        <h1>Order No {{order.id}}</h1>
+        <h2>Items in your order: {{total_products}}</h2>
+    </div>
+
+    <div class="container">
+       
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Vendor</th>
+                    <th>Vendor Contact</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                {% for item in order_items.all %}
+                    <tr>
+                        <td>{{item.product.name}}</td>
+                        <td>{{item.quantity}}</td>
+                        <td>{{item.price}}</td>
+                        <td>{{item.product.vendor.get_full_name}}</td>
+                        <td>{{item.product.vendor.tel_no.as_e164}}</td>
+                    </tr>
+                {% endfor %}
+                    
+            </tbody>
+        </table>
+
+        <h2>Total Cost: {{order.get_total_cost}}</h2>
+    </div>
+</section>
+    
+{% endblock content %}
+    
+
+    
+    {% block footer %}
+        
+    {% endblock footer %}
+        
+    

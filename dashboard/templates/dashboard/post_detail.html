@@ -1,0 +1,75 @@
+{% extends 'dashboard/header.html' %}
+{% load static %}
+
+
+{% block title %}
+    {{post.heading}}  {{post.created}}
+{% endblock title %}
+
+
+
+{% block content %}
+<head>
+    <style>
+        
+    </style>
+</head>
+<div class="row col-12 pt-5" style="margin: 100px auto;">
+    
+    {% if post %}
+        
+        <div class=" card">
+            <h2 >{{post.heading}} <span>
+                    <blockquote>{{post.created}}</blockquote>
+                </span></h2>
+                {% if post.image %}
+                <img class="card-img" src="{{post.image.url}}" alt="">
+                
+                {% endif %}
+
+        </div>
+ 
+
+        <div class="subheading" >
+            <h4 >{{post.subheading}}</h4>
+           
+                <h5 >{{post.content}}</h5>
+            
+        </div>
+        <div class="container"  style="margin-top: 80px;display: flex; margin-left: 10px;">
+            <h4><a class="badge badge-outline-light" href="{% url 'dashboard:post_images' post.pk %}">Add Images</a></h4>
+            <h5><a class="badge badge-outline-success" href="{% url 'dashboard:update_post' post.pk %}">Update</a><span><a class="badge badge-outline-danger" href="{% url 'dashboard:delete_post' post.pk %}">Delete</a></span></h5>
+        </div>
+
+        
+        {% if post.images %}
+
+        <div class="row">
+
+        
+            <div class=" span12  mt-5">
+                <h2 class="center"> Other Images</h2>
+                <div class="wrapper" style="margin-top: 50px;">
+                
+                {% for item in post.images.all %}
+                    <div class="project-container">
+                        <img style="height: 200px; width: 200px;" src="{{item.image.url}}" alt="" class="image-container fit">
+                    </div>
+                {% endfor %}
+                    
+                </div>
+            </div>
+        {% endif %}
+            
+
+       
+            
+    {% endif %}
+        
+</div>
+
+
+    
+{% endblock content %}
+    
+    

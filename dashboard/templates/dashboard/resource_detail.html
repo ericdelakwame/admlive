@@ -1,0 +1,39 @@
+{% extends 'dashboard/header.html' %}
+{% load static %}
+
+
+
+{% block title %}
+Resource created on {{resource.created}}
+    
+{% endblock title %}
+    
+
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+
+            <h1 class="center mt-5">
+                Resource created on {{resource.created}}
+            </h1>
+            <p>{{resource.content|safe}}</p>
+        </div>
+
+        <div style="display: flex; ">
+        <div>
+            <a class="btn btn-success m-2" href="{% url 'dashboard:update_resource' resource.pk %}">Update</a>
+        </div>
+        <div>
+            <a class="btn btn-danger m-2" href="{% url 'dashboard:delete_resource' resource.pk %}">Delete</a>
+        </div>
+        
+        
+           
+        </div>
+    </div>
+</div>
+    
+{% endblock content %}
+    

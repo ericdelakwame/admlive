@@ -1,0 +1,96 @@
+{% extends 'dashboard/header.html' %}
+{% load static %}
+
+
+{% block title %}Site Users{% endblock title %}
+
+{% block content %}
+<head></head>
+<section id="intro">
+    <div class="table-responsive">
+        <table id="table" class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>User Type</th>
+                    <th>Date Joined</th>
+                    <th>Action</th>
+                    <th>Moderation</th>
+                    <th>Details</th>
+                   
+                </tr>
+            </thead>
+
+            <tbody>
+                
+                {% for user in users %}
+                    <tr>
+                       <td> {{user.get_full_name.title}}
+                        {% if user.is_paragon %} <span class="badge badge-outline-danger">
+                           
+                           
+                               Paragon
+                               </span>
+                           {% endif %}
+                               
+                      </td>
+                        <td>
+                            
+                            {% if user.is_superuser %}
+                                <span class="badge badge-danger">Admin
+                            {% elif user.is_moderator %}
+                            <span class="badge badge-warning">Moderator
+                            {% elif user.is_designer %}
+                            <span class="badge badge-success">Creative
+                            {% elif user.is_student %}
+                            <span class="badge badge-info">Student
+                                {% elif user.is_paragon %}
+                                <span class="btn btn-danger">Paragon</span>
+                            {% endif %}
+                                
+                        </td>
+                        
+                        <td>{{user.date_joined}}</td>
+                      
+                        <td><a class="btn btn-dark btn-outline-danger" href="{% url 'dashboard:enable_paragon' user.pk %}">Activate Paragon</a></td>
+
+                        <td>
+                            
+                            {% if user.is_moderator %}
+                                <a class="btn btn-dark btn-outline-danger" href="{% url 'dashboard:disable_moderator' user.pk %}">Disable Moderator</a>
+                                {% else %}
+                                <a class="btn btn-dark btn-outline-danger" href="{% url 'dashboard:enable_moderator' user.pk %}">Enable Moderator</a>
+                                {% endif %}
+                                
+                            
+                        </td>
+                        <td><a class="badge badge-outline-dark" href="{% url 'dashboard:user_detail' user.pk %}">Check Details</a></td>
+                    </tr>
+                  
+                        
+                {% endfor %}
+                    
+
+            </tbody>    
+
+        </table>
+    </div>
+</section>
+
+
+{% block javascript %}
+
+<script>
+    $(document).ready(function () {
+        $('#table').DataTable({
+
+        });
+    });
+</script>
+    
+{% endblock javascript %}
+    
+    
+{% endblock content %}
+    
+    

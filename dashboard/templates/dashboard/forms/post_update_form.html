@@ -1,0 +1,48 @@
+{% extends 'dashboard/header.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+Upadte {{object.heading}}
+{% endblock title %}
+
+
+{% block content %}
+
+<div class="row" style="margin-top: 50px;">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <h4 class="card-title mb-5 center"><span class="alert alert-success">You are about to update
+                    {{object.heading}}. </span></h4>
+                    <div class="card-body" style="width: 300px; height: 250px;margin: auto; ">
+                        
+                        {% if post.image %}
+                            <img class="card-img" src="{{post.image.url}}" alt="">
+                        {% endif %}
+                            
+                    </div>
+            <div class="card-body">
+                <div class="d-flex flex-row justify-content-center">
+
+
+                    <form class="form-body" action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{form.media}}
+                        {{form|crispy}}
+                        <div class="container m-3">
+                            <button type="submit" class="btn btn-success">
+                                Update
+                            </button>
+                        </div>
+                       
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+{% endblock content %}

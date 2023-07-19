@@ -1,0 +1,52 @@
+{% extends 'home/header.html' %}
+{% load static %}
+
+{% block title %}
+
+{% endblock title %}
+
+
+
+{% block content %}
+
+<head>
+    <style>
+
+    </style>
+</head>
+<div id="content">
+
+    <div class="container headline" style="width: 60%; margin: auto;">
+        <h2 class="center">Products tagged with "{{tag.title}}"</h2>
+    </div>
+
+    <div class="container">
+        <div class="wrapper">
+
+            {% for product in products %}
+            <div class="project-container">
+                <p>Product: {{product.name}}</p>
+                <h4>Vendor: {{product.vendor.get_full_name}}</h4>
+                {% if product.image %}
+                <img class="project-image" src="{{product.image.url}}" alt="">
+                {% endif %}
+                <div class="container">
+                    <h4 class="center">Other tags</h4>
+                    {% for tag in product.tags.all %}
+                        <a class="btn-white" href="{% url 'shop:tagged_products' tag %}">{{tag}}</a>
+                    {% endfor %}
+                        
+                </div>
+                <a class="btn btn-black" href="{{product.get_absolute_url}}">Buy</a>
+
+
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+
+
+</div>
+{% endblock content %}

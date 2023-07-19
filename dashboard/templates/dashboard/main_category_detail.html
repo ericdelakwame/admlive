@@ -1,0 +1,91 @@
+{% extends 'dashboard/header.html' %}
+{% load static %}
+
+
+
+{% block title %}
+    {{main_category.name}}
+{% endblock title %}
+
+
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'home/assets/css/modish.css' %}">
+   
+    <style>
+         #category, #other-categories{
+            background-color: #1c1c1c;
+            color: #fff;
+        } 
+    
+       
+        .table *{
+            overflow-x: auto;
+            padding: 10px;
+            font-family: 'Prata', sans-serif;
+
+        }
+        .table td, .table th{
+            border: #fff 1px solid;
+        }
+      
+    </style>
+</head>
+
+<div id="content">
+
+<section id="category">
+    <div class="headline" data-aos="fade-up" data-aos-duration="1000">
+        <h1 class="center">{{main_category.name}} <span style="padding-top: 20px; display: block;"></span></h1>
+        
+    </div>
+
+    <div class="headline" data-aos="flip-left" data-aos-duration="1000">
+        <h1 class="center">Categories in {{main_category.name.title}}</h1>
+    </div>
+    <div class="wrapper">
+        
+        {% for category in main_category.categories.all %}
+            <div class="project-container">
+            <h4 class="center">{{category.name.title}}</h4>
+          
+            
+            <h5 class="center"><a class="btn btn btn-white" href="{{category.get_absolute_url}}" style="text-align:center 
+            ;">See More</a></h5>
+                
+            </div>
+        {% endfor %}
+            
+        
+            
+    </div>
+</section>
+    <section id="other-categories" style="margin: 50px auto;">
+    <div class="container headline"  data-aos="zoom-in" data-aos-duration="1000">
+        <h1  >
+            Other Categories
+        </h1>
+        <div class="wrapper">
+            
+            {% for cat in other_categories %}
+            <div class="container">
+                <a class="btn btn-white btn-large" href="{{cat.get_absolute_url}}">{{cat.name}}</a>
+            </div>
+                
+            {% endfor %}
+                
+        </div>
+    </div>    
+    </section> 
+    
+    </div>
+{% endblock content %}
+
+
+{% block footer %}
+    
+{% endblock footer %}
+    
+    
+    

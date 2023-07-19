@@ -1,0 +1,135 @@
+#cart-heading{
+    margin: 50px auto;
+    width: 100%;
+ 
+}
+
+#cart-heading h1{
+    font-size: 35px;
+    font-family: 'Poppins', sans-serif;
+}
+
+#cart-table{
+    margin-top: 20px;
+   width: 80%;
+   margin: auto;
+    border-bottom: #425563 1px solid;
+
+}
+
+
+#cart-table table{
+    text-align: center;
+    width: 100%;
+    border-collapse: collapse;
+    border: #425563 1px solid;
+    background-color: #eee; 
+}
+
+table th{
+    font-size: 16px;
+    color: #425563;
+    padding-bottom: 15px;
+   
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 2px;
+    
+    
+}
+table form input{
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 0;
+}
+table #id_quantity{ 
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+
+#cart-menu{
+    margin: 50px auto;
+    width: 80%;
+
+}
+
+.cart-btn{
+    width: auto;
+    
+    border-radius: 3px;
+    background-color: #425563;
+    color: #FFFFFF;
+    font-size: 14px;
+    padding: 10px;
+    text-decoration: none;
+}
+.cart-btn:hover{
+    background-color: #FFFFFF;
+    color: #425563;
+}
+#cart-menu li{
+    display: inline;
+    padding: 0 20px 0 20px;
+    float: left;
+}
+
+#coupon-form button{
+    margin-top: 20px;
+    clear: both;
+    float: left;
+}
+.total{
+    padding-top: 30px;
+    font-size: 20px;
+    color: #425563;
+     background-color: #eee;
+    
+}
+
+#coupon-form{
+    margin-top: 15px;
+    text-align: center;
+    padding: 30px;
+    margin: auto;
+    
+}
+
+@media screen and (max-width:500px) {
+    table{
+        overflow-y: auto;
+        width: 100%;
+        margin: 0;
+    }
+    table th{
+        font-size: 13px;
+    }
+
+    td{
+        font-size: 12px;
+    }
+    
+    #cart-table{
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    #cart-menu li{
+        margin: 5px;
+        display: block;
+        width: 80%;
+        text-align: center;
+
+        
+    }
+    #coupon-form button{
+        width: 80%;
+        margin: auto;
+        float: none;
+        margin: 5px;
+    }
+    #cart-menu a{
+        text-decoration: none;
+        padding: 5px;
+    }
+}

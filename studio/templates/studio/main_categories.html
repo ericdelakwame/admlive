@@ -1,0 +1,71 @@
+{% extends 'studio/header.html' %}
+
+{% load static %}
+
+
+{% block title %}
+Main Categories
+{% endblock title %}
+
+
+
+{% block content %}
+
+<head>
+    <style>
+        a {
+            color: #fff;
+        }
+
+        #project-categories {
+            width: 80%;
+            margin: 30px auto;
+        }
+
+        .table * {
+            overflow-x: auto;
+            padding: 10px;
+            font-family: 'Prata', sans-serif;
+
+        }
+
+        .table td,
+        .table th {
+            border: #fff 1px solid;
+        }
+
+        a {
+            color: #fff;
+        }
+    </style>
+</head>
+<section id="project-categories">
+    <div id="content">
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>No Of Categories</th>
+                        <th>**</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for category in main_categories %}
+                    <tr>
+                        <td>{{category.name}}</td>
+                        <!-- <td>{{category.objects.count}}</td> -->
+                        <td><a style="color: #fff;" href="{% url 'studio:main_category_detail' category.pk %}">See More</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

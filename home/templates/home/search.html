@@ -1,0 +1,86 @@
+{% extends 'home/header.html' %}
+{% load static %}
+
+
+
+{% block title %}
+Search Results: {{query}} 
+    
+{% endblock title %}
+
+
+
+{% block content %}
+
+<div id="content">
+    <div class=" headline">
+        <h1 class="center">You Searched </h1>
+        <h2 class="center">For " {{query}} "</h2>
+    </div>
+
+    <div id="designers" class="container">
+        <p style="font-size: 20px; font-style: italic;">Results</p>
+        <hr>
+        {% if users %}
+            <div class="wrapper">
+                
+                {% for user in users %}
+                <div class="project-container">
+                    <a href="{% url 'accounts:user_profile' user.pk %}">
+                        <h3 style="color: #eee;">{{user.get_full_name}}</h3#>
+                        
+                        {% if user.photo %}
+                        <img src="{{user.photo.url}}" alt="" class="project-image">
+                        {% endif %}
+                        
+                        <h4 class="center btn btn-black">{{user.projects.count}} Project{{user.projects.count|pluralize}}</h4>
+                    </a>
+                    
+                </div>
+                {% endfor %}
+                    
+                
+            </div>
+        
+            
+    </div>
+
+    <div id="projects" class="container">
+    
+        {% elif projects %}
+        <div class="wrapper">
+    
+            {% for project in projects %}
+            <div class="project-container ">
+                <a style="color: #fff;" href="{{project.get_absolute_url}}">
+                    <h3 class="center">Project:  {{project.name}}</h3>
+                    <h3 class="center">By {{project.owner.get_full_name}}</h3>
+                    {% if project.image %}
+                    <img src="{{project.image.url}}" alt="" class="project-image">
+                    {% endif %}
+                    
+                    <h4 class="center">{{project.reviews.count}} Review{{project.reviews.count|pluralize}}</h4>
+                </a>
+                
+            </div>
+            {% endfor %}
+    
+            
+        </div>
+
+        {% else %}
+        <div class="container" data-aos="flip-right" data-aos-duration="1000">
+
+        <h2 class="alert warning center">
+            Sorry {{query}} was not found. Please try another search
+        </h2>
+        </div>
+       
+        {% endif %}
+    
+    </div>
+</div>
+    
+{% endblock content %}
+    
+    

@@ -1,0 +1,110 @@
+{% extends 'home/header.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+    {{category.name}}
+{% endblock title %}
+    
+
+{% block content %}
+    <div id="content">
+    
+        <!-- /// CONTENT  /////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+    
+        <div class="container1">
+            <div class="row">
+                <div class="span12">
+                    <div class="headline">
+                        <h1>{{product_category.name}}:  <span style="font-size: 16px;">{{product_category.products.count}} Product{{product_category.products.count|pluralize}}</span> </h1>
+                    </div>
+
+                        
+                        {% if product_category.products %}
+                    <div class="wrapper">
+                    
+                        {% for product in product_category.products.all %}
+                    <div class="project-container">
+                        <h4 class="center">{{product.name}}</h4>
+                        
+                        {% if product.image %}
+                            <img src="{{product.image.url}}" alt="" class="project-image">
+                        {% endif %}
+                        <h4 class="center">{{product.price}}</h4>
+                        <h4 class="center"><a class="btn btn-black" href="{{product.get_absolute_url}}">See More</a></h4>
+                            
+                    </div>
+                        {% endfor %}
+                    
+                    
+                    </div>
+                        {% endif %}
+
+
+                            
+                </div><!-- end .span12 -->
+            </div><!-- end .row -->
+         
+        </div><!-- end .container -->
+   
+        <div class="container1" >
+            <div class="row">
+                <div class="span12">
+
+                    <div class="container" style="margin: 50px auto;">
+                        <div class="headline">
+                            <h1 class="center">Other Categories</h1>
+                        </div>
+                       
+                        <div class="wrapper">
+                            {% for cat in other_categories %}
+                            <div class="container1">{{cat.name}}</div>
+                    
+                            {% if cat.products %}
+                            <div class="project-container">
+                                <h2 class="center">{{cat.products.count}} Product{{cat.products.count|pluralize}}</h2>
+                    
+                                {% for product in cat.products.all %}
+                                <li class="product">
+                                    <a href="{{product.get_absolute_url}}">
+                    
+                                        {% if product.image %}
+                                        <img src="{{product.image.url}}" alt="">
+                                        {% endif %}
+                    
+                                        <h4>
+                                            <small>Stock</small>
+                                            {{product.stock}}
+                                        </h4>
+                    
+                                        <h5 class="price">{{product.price}}</h5>
+                    
+                                    </a>
+                    
+                                    <a class="btn add_to_cart_button" href="#">Add to cart</a>
+                    
+                                </li>
+                                {% endfor %}
+                    
+                            </div>
+                    
+                            {% endif %}
+                    
+                    
+                            {% endfor %}
+                    
+                        </div>
+                    
+                    </div><!-- end .container -->
+                </div>
+            </div>
+        </div>
+    
+        <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+    
+    </div><!-- end #content -->
+
+    
+{% endblock content %}
+    

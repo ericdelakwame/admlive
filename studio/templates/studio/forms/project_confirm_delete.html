@@ -1,0 +1,35 @@
+{% extends 'studio/header.html' %}
+{% load static %}
+
+
+
+{% block title %}
+
+Delete {{object.name}}
+    
+{% endblock title %}
+    
+
+
+{% block content %}
+
+<div class="container center">
+    <h4>You are about to delete {{object.name}}</h4>
+    Please confirm below.
+    
+    {% if object.image %}
+        <p><img class="project-image" src="{{object.image.url}}" alt=""></p>
+    {% endif %}
+        
+</div>
+    <div class="container" style="margin: 100px auto;">
+    
+        <form method="POST">
+            {% csrf_token %}
+            <p>Are you sure you want to delete "{{ object }}"?</p>
+            <input class="btn btn-light" type="submit" value="Confirm">
+        </form>
+    </div>
+
+{% endblock content %}
+    

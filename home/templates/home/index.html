@@ -1,0 +1,427 @@
+{% extends 'home/header.html' %}
+
+{% load static %}
+
+{% block title %}Home:  African
+Design Matters {% endblock title %}
+
+{% block content %}
+
+<head>
+	<meta content="blog posts" descriptio="African Design Matters Blog" author="'simon charwey">
+	<style>
+		#infowindow {
+			background-color: #000;
+			color: #eee;
+			min-height: 250px;
+		}
+
+		h1 {
+			font-size: 25px;
+		}
+		/* #header{
+			position: fixed;
+			z-index: 5;
+		} */
+
+		li{
+			list-style: none;
+		}
+		
+	</style>
+
+
+</head>
+
+<div id="content" >
+	<!-- /// CONTENT  /////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+
+<!-- Latest Projects -->
+<div class="row">
+	<div class="span12">
+		<div class="container" style="margin: auto; text-align: center;">
+			<h1 class="animate-charcter" style=" font-size: 30px;text-align:center 
+					; margin-top: 50px;">Latest Projects</h1>
+		</div>
+		<div class="container">
+				<ul id="simple" class="owl-carousel" style=" height: 400px;  margin: auto;width: 100%;">
+				
+				
+					{% for project in latest_projects %}
+				
+					<li style="list-style: None;">
+				
+						<a style="color: #fff;" href="{{project.get_absolute_url}}">
+							<div class="project-container" style="background-color: #000; color: #fff; margin: auto; width: 100%;height: 400px; text-align: center;">
+				
+								<h4 class="text-left">{{project.name}}</h4>
+								{% if project.image %}
+								<a href="{{project.get_absolute_url}}">
+									<img src="{{project.image.url}}" alt="" style="object-fit:cover; height: 100%; width: 100%; margin: auto;">
+								</a>
+								
+								{% endif %}
+								
+							
+					
+				
+							</div>
+						</a>
+					</li>
+					{% endfor %}
+				
+				
+				</ul>
+		</div>
+	
+
+
+	</div>
+</div>
+<!-- End Latest Projects --> 
+
+
+<!-- Trending -->
+<div class="row" style="height: 200px; margin-top: 80px;">
+	<div class="span12">
+		<div class="container" >
+		
+				<div class="headline" >
+				<h1>Trending</h1>
+		
+				<div class="hwrap" style="border-radius: 10px;background-color: #000000;">
+					<div class="hmove">
+		
+						{% for article in site_posts %}
+						<div class="hitem">
+							<a style="font-size: 14px; border-bottom: #fff 1px solid; border-top: #fff 1px solid;"
+								class="btn btn-black" href="{{article.get_absolute_url}}">{{article.heading}}</a>
+						</div>
+						{% endfor %}
+		
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	<!--End Trending  -->
+
+	<!--Latest In Blog  -->
+
+<!-- End Latest In Blog -->
+	
+<div class="row" style="height: 100px;">
+<div class="span12">
+	<div class="headline">
+		<h1>Partners</h1>
+		<div style="display: flex;">
+			
+			<img src="{% static 'home/images/padi_white.png' %}" alt="" style="width: 160px; height: 83.2px;object-fit: contain;"></div>
+	
+		
+	</div>
+</div>
+</div>
+
+
+<!-- Team -->
+<div class="row" style="margin-top: 60px;">
+	<div class="span12">
+		<div id="porfolio1">
+			<div class="headline center container">
+				<h1>ADM Advisory Board</h1>
+			</div>
+			<div class="container">
+				<ul id="simple" class="owl-carousel" style=" height: 350px; width: 100%; margin: auto;">
+				
+		
+					{% for user in users %}
+		
+					{% if user.is_superuser or user.is_moderator %}
+					
+					<li style="list-style: None;">
+						<div style="height: 300px;">
+							<h6 class="center">{{user.get_full_name}}</h6>
+		
+							{% if user.photo %}
+							<div  style="width: 100%; height: 400px; text-align: center;">
+								<img src="{{user.photo.url}}" alt=""
+									style="width: 100%; height: 80%; border-radius: 5%; margin: auto; object-fit: contain;">
+							</div>
+								<h6 class="center">
+									{% if user.is_superuser and user.username == 'simoncharwey' %}
+									CEO
+									{% elif user.is_moderator %}
+									Moderator
+									{% endif %}
+								</h6>
+		
+							{% endif %}
+						
+		
+		
+		
+						</div>
+		
+					</li>
+					{% endif %}
+		
+					{% endfor %}
+		
+		
+				</ul>
+		
+			</div>
+		
+		
+		</div>
+
+	</div>
+</div>
+<!-- End Team -->
+
+<!-- Map -->
+<div class="row" id="community">
+<div class="headline" data-aos="fade-in" data-aos-duration="1000">
+	<h1 class="center animate-charcter">Community</h1>
+</div>
+<div class="container">
+	<h4 class="center ">
+		Find Nearby Studios
+	</h4>
+</div>
+
+<div style="width: 100px; margin: auto;">
+	<h3 id="dist" class="btn-black center"></h3>
+</div>
+
+<div id="slider" style="width: 60%; height: 10px; margin-bottom: 30px;" class="container">
+</div>
+<div id="map" style="height: 400px; width: 80%; margin: auto;">
+
+</div>
+</div>
+<!-- End Map -->
+
+<!-- end .fullwidth-section -->
+
+</div>
+<!-- end #content -->
+
+{% endblock content %}
+
+
+
+{% block javascript %}
+<script>
+	$(document).ready(function () {
+		$('.owl-carousel').owlCarousel({
+			autoplay: true,
+			autoplayTimeout: 2000,
+			autoplayHoverPause: true,
+			loop: true,
+			margin: 10,
+			responsiveClass: true,
+			responsive: {
+				0: {
+					items: 1,
+					nav: true,
+					loop: true
+				},
+				600: {
+					items: 1,
+					nav: true,
+					loop: true,
+					
+				},
+				1000: {
+					items: 5,
+					nav: true,
+					loop: true,
+					margin: 20
+				}
+			}
+		})
+	})
+</script>
+
+<script async defer
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDOpEeYV2V0k_EZVpRpbfeUAiQqQcwLIA&callback=initMap">
+	</script>
+
+<script>
+
+	var map;
+	var bounds;
+	var userId = '{{user_id}}';
+
+	function initMap() {
+		map = new google.maps.Map(document.getElementById('map'), {
+			zoom: 5,
+			mapTypeControl: false,
+		})
+		bounds = new google.maps.LatLngBounds();
+		var position = userLocation();
+
+	}
+
+
+	function slideIt(position) {
+
+		var lat = position.lat()
+		var lng = position.lng()
+		$('#slider').slider({
+			range: false,
+			min: 5,
+			max: 100,
+			value: 5,
+			step: 10,
+			change: function (event, ui) {
+				var km = ui.value
+				$('#dist').html('Studios within ' + ui.value + ' Km')
+				data = {
+					'kms': JSON.stringify(km),
+					'clat': JSON.stringify(position.lat()),
+					'clng': JSON.stringify(position.lng())
+
+				}
+
+				processData(data)
+
+			}
+
+		});
+
+	}
+
+	function processData(data) {
+
+
+		$.ajax({
+			url: "{% url 'home:nearby_view' %}",
+			method: 'POST',
+			dataType: 'json',
+			async: false,
+			data: data,
+			success: function (users) {
+				processUsers(users)
+			}
+		})
+	}
+
+	function processUsers(users) {
+		map = new google.maps.Map(document.getElementById('map'), {
+			zoom: 10
+		})
+
+		$.each(users, function (i, user) {
+			$.get('/api/accounts/users/' + user.pk, function (user) {
+				getUser(user)
+
+
+			})
+
+		})
+	}
+
+	function showPosition(location) {
+		var userCoord = new google.maps.LatLng({
+			lat: location.coords.latitude,
+			lng: location.coords.longitude
+		})
+		var userMarker = new google.maps.Marker({
+			position: userCoord,
+			map: map,
+			label: 'You',
+			animation: google.maps.Animation.BOUNCE
+		});
+		map.panTo(userCoord);
+		map.setZoom(11);
+		slideIt(userCoord)
+	}
+
+	function userLocation() {
+		if (navigator.geolocation) {
+			var coords = navigator.geolocation.getCurrentPosition(showPosition)
+		}
+	}
+
+
+	function getuserId(id) {
+		return "{% url 'accounts:user_profile' '0' %}".replace('0', id)
+	}
+
+
+
+
+
+	function getUser(user) {
+		
+		var userInfo = '<div id="infowindow"><h3 class="center">' + user.first_name + ' ' + user.last_name + '</h3><div><img src="' + user.photo + '" style="width:100px; height=100px"></div><h5 > Company: ' + user.profile.company_name + '</h5><p>Tel No: ' + user.tel_no + '</p><h2 class="center"><a class="btn btn-white" href="' + getuserId(user.id) + '">Connect</a></h2></div>';
+
+		var userLoc = new google.maps.LatLng({
+			lat: user.location.coordinates[1],
+			lng: user.location.coordinates[0]
+		})
+		bounds.extend(userLoc)
+		var marker = new google.maps.Marker({
+			position: userLoc,
+			title: user.first_name,
+			label: user.first_name + ' ' + user.last_name,
+			animation: google.maps.Animation.BOUNCE
+
+		})
+		marker.setMap(map)
+		const infowindow = new google.maps.InfoWindow({
+			content: userInfo,
+		});
+
+		map.fitBounds(bounds);
+		marker.addListener("click", function () {
+			infowindow.open(map, marker)
+		})
+	}
+
+
+
+
+</script>
+
+
+<script>
+	function getProjects(){
+		$.ajax({
+			url: '/api/studio/projects',
+			method: 'GET',
+			dataType: 'json',
+			success: function(projects){
+				showProjects(projects)
+			}
+		})
+	}
+
+	function fetchProject(id){
+		return '{% url "studio:project_detail" "0" %}'.replace("0", id)
+	}
+
+	function fetchOwner(id){
+		return '{% url "studio:user_detail" "0" %}'.replace("0", id)
+	}
+
+	function showProjects(projects){
+		var ff = document.getElementById("trial")
+		
+		$.each(projects, function(i, project){
+			$(ff).find(".owl-carousel").append(
+				'<li style="list-style:none"><div class="project-container"><h5 class="center">'+'<a href="'+fetchProject(project.id)+'">'+project.name+'</a>'+'</h5><img class="project-image fit" src="'+project.image+'"></div></li>'
+			)
+			$("#studio").html('<a style="color:#eee" href="'+fetchOwner(project.owner.id)+'">'+project.owner.first_name+' '+project.owner.last_name+'</a>')
+			$("#cat-info").html(project.category.name)
+		})
+	}
+	getProjects();
+</script>
+
+{% endblock javascript %}

@@ -1,0 +1,102 @@
+{% extends 'home/header.html' %}
+{% load static %}
+{% load hitcount_tags %}
+
+
+{% block title %}
+    Project: {{project.name.title}}
+{% endblock title %}
+
+
+{% block content %}
+    <div id="content">
+        
+        {% if project %}
+        <div class="row">
+            <div class="container">
+                <h1>Student Project</h1>
+            </div>
+           
+        </div>
+        <div class="row">
+            <h1 class="headline">{{project.owner.get_full_name}} <span>
+                Institution: {{project.owner.institution}}
+                
+                {% if request.user.username == project.owner.username %}
+                <div class="container">
+                    <a class="btn btn-black" href="{% url 'student:update_project' project.pk %}">Update</a>
+                    <a class="btn btn-light" href="{% url 'student:delete_project' project.pk %}">Delete</a>
+                    <a class="btn btn-light" href="{% url 'student:add_project_image' project.pk %}">Add Image</a>
+
+                    <p style="font-size: 14px;"><a class="btn btn-black" href="{% url 'student:connect_with_user' project.owner.pk %}">Connect With {{project.owner.first_name.title}}</a> </p>
+                </div>
+                    
+                {% endif %}
+                    
+            </span></h1>
+            <div class="container">
+                <h2 >{{project.name.title}} : <span style="font-size: 18px; margin-left: 15px;">  {% get_hit_count for project %} Views</span> </h2>
+                {% if project.image %}
+                    <img style="width: 60%; height: 400px;" src="{{project.image.url}}" alt="">
+                {% endif %}
+                    
+            </div>
+        </div>
+
+    <div class="row" style="margin-bottom: 50px;">
+        <div class="container">
+            <div class="headline">
+                <h1>About This project</h1>
+                </div>
+                <p class="btn btn-black">Intro</p>
+                <h3>{{project.intro}}</h3>
+                <p class="btn btn-black" style="margin-top: 20px;">Description</p>
+                <h4>{{project.description}}</h4>
+            
+        </div>
+<hr>
+        <div class="container">
+            <h4 ><a class="btn btn-black" href="">Tags </a> 
+            <span>
+                <i class="fa fa-arrow-circle-o-right"></i>
+                
+                {% for tag in project.tags.all %}
+                    <a class="btn btn-light" href="">{{tag}}</a>
+                {% endfor %}
+                    
+            </span>
+            </h4>
+        </div>
+    </div>
+    
+    {% if project.images is not None %}
+    <div class="row" style="margin-top: 30px;">
+    <div class="headline">
+        <h1 >
+            Other Images
+        </h1>
+    </div>
+       
+        <div class="project-wrapper" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+            
+            {% for item in project.images.all %}
+                <div class="project-container fit"  style="width: 40%; height: 200px; margin: auto;">
+                    <img  src="{{item.image.url}}" alt="" class="image-container fit" style="margin-bottom: 20px;">
+
+                </div>
+            {% endfor %}
+                
+        </div>
+    </div>
+        
+    {% endif %}
+        
+
+       
+            
+        {% endif %}
+            
+    </div>
+{% endblock content %}
+    
+    

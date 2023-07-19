@@ -1,0 +1,72 @@
+{% extends 'dashboard/header.html' %}
+
+{% load static %}
+
+
+{% block title %}
+Main Categories
+{% endblock title %}
+
+
+
+{% block content %}
+
+<head>
+    <style>
+        a {
+            color: #fff;
+        }
+
+        #project-categories {
+            width: 80%;
+            margin: 30px auto;
+        }
+
+        .table * {
+            overflow-x: auto;
+            padding: 10px;
+            font-family: 'Prata', sans-serif;
+
+        }
+
+        .table td,
+        .table th {
+            border: #fff 1px solid;
+        }
+
+        a {
+            color: #fff;
+        }
+    </style>
+</head>
+<section id="project-categories">
+    <div id="content">
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Details</th>
+                        <th>Sub-Categories</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for category in main_categories %}
+                    <tr>
+                        <td>{{category.name}}</td>
+                        
+                        <td><a style="color: #fff;" href="{% url 'dashboard:main_category_detail' category.pk %}">See More</a>
+                        </td>
+                        <td><a href="{% url 'dashboard:new_project_category' category.pk %}">Add Sub-Category</a></td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

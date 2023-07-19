@@ -1,0 +1,70 @@
+{% extends 'home/header.html' %}
+{% load static %}
+
+
+{% block title %}
+Merchandise
+    
+{% endblock title %}
+
+
+{% block content %}
+
+            <div id="content">
+
+                <div class="container center headline" data-aos="fade-down" data-aos-duration="1000">
+                    <h1>Shop</h1>
+                </div>
+    
+                <!-- /// CONTENT  /////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+<div id="products">
+    <div class="container1">
+        <ul>
+            
+            {% for cat in product_categories %}
+                <u><li style="list-style: none;">
+                    <div class="accordion">
+                        <a class="accordion-item" href="" style="color: #eee;">{{cat.name}}:   <i class="fa fa-arrow-right" style="margin-left: 10px;"></i> {{cat.products.count}}  Product{{cat.products.count|pluralize}}</a>
+                        
+                        {% if cat.products %}
+                            
+                        <div class="accordion-item-content">
+                            <div class="wrapper">
+                                
+                                {% for product in cat.products.all %}
+                                <a href="{{product.get_absolute_url}}" style="color: #eee;">
+                                <div class="project-container fit">
+                                    <h3>{{product.name}} </h3>
+                                
+                                    {% if product.image %}
+                                    <img src="{{product.image.url}}" alt="" class="project-image">
+                                    {% endif %}
+                                    <h5>Ghs {{product.price}}</h5>
+                                
+                                <h4><span style="margin-left: 10px; font-size: 12px;">({{product.reviews.count}} Review{{product.reviews.count|pluralize}})</span></h4>
+                               
+                                </div>
+                               
+                                </a>
+                                {% endfor %}
+                                    
+                                
+                            </div>
+                        
+                        
+                        </div>
+                                
+                        {% endif %}
+                            
+                       
+                    </div>
+                </li></u>
+            {% endfor %}
+                
+        </ul>
+    </div>
+</div>   
+    
+            </div><!-- end #content -->
+    {% endblock content %}

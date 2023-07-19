@@ -1,0 +1,38 @@
+{% extends 'dashboard/header.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+
+{% endblock title %}
+
+
+{% block content %}
+
+<div class="row" style="margin-top: 50px;">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <p>{{object.content|safe}}</p>
+            <h4 class="card-title mb-5 center"><span class="alert alert-danger">You are about to delete above . Please confrim below</span></h4>
+            <div class="card-body">
+                <div class="d-flex flex-row justify-content-center">
+
+
+                    <form class="form-body" action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{form.media}}
+                        {{form|crispy}}
+                        <button type="submit" class="badge badge-outline-danger">
+                           Confirm
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+{% endblock content %}

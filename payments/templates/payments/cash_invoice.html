@@ -1,0 +1,39 @@
+{% extends 'home/header.html' %}
+{% load static %}
+
+
+
+{% block title %}
+    Cash Payment: Or No {{order.id}}
+{% endblock title %}
+
+
+{% block content %}
+<div id="content" style="width: 100%; margin: auto;">
+    
+    <div class="container" style="background-color: #eee; color: #1c1c1c; min-height: 400px; width: 80%; margin: 0px auto;">
+            <div class="headline ">
+                <h1 style="margin: 30px auto;">Cash Payment: Order No: {{order.id}}</h1>
+                <h2>Hello {{order.first_name.title}},</h2>
+                <p>
+                     You have chosen to pay for your items by cash
+                </p>
+                <p>
+                    The vendor {{order.vendor.get_full_name}} will contact you with delivery details.
+                </p>
+
+                <h6>Please observe all Covid-19 protocols when receiving your items. Thanks</h6>
+                <blockquote>The ADM team</blockquote>
+            </div>
+
+            <div class="container">
+                <h5 class="center"><a class="btn btn-white" href="{% url 'payments:create_invoice' order.id %}">Print Invoice</a></h5>
+                <h5 class="center"><a class="btn btn-black" href="{% url 'home:index' %}"><i class="fa fa-home"></i></a><a class="btn btn-black" href="{% url 'shop:products' %}"><i class=" fa fa-shopping-cart"></i></a></h5>
+            </div>
+    </div>
+
+</div>
+    
+{% endblock content %}
+    
+    

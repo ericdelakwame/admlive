@@ -1,0 +1,877 @@
+{% extends 'dashboard/header.html' %}
+{% load static %}
+{% load hitcount_tags %}
+{% load crispy_forms_tags %}
+{% block title %}
+Admin Dashboard
+{% endblock title %}
+
+
+{% block content %}
+
+<head>
+  <!-- <link rel="stylesheet" href="{% static 'dashboard/css/index.css' %}"> -->
+</head>
+
+<div class="row">
+  <!-- <div class="col-6">
+      <a class="btn btn-light " href="{% url 'accounts:update_profile' %}">Update Profile Here</a>
+    
+  </div> -->
+</div>
+<!-- <div class="row">
+  <div class="col-6">
+    <div class="card">
+      <div class="card-body">
+        <p><a class="btn btn-light" href={{slack_btn}}>
+            Add To Slack
+          </a></p>
+      </div>
+
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="card">
+      <div class="card-body">
+       <h4 class="card-header">Slack Channels</h4>
+       <!-- <div class="container">
+         <div class="wrapper">
+           
+           {% for channel in slack_channels %}
+             <a class="btn btn-light" href="{% url 'adm_slack:channel_detail' channel.id %}">{{channel.name}}</a>
+           {% endfor %}
+             
+         </div>
+       </div> -->
+      <!-- </div>
+  
+    </div>
+  </div>
+</div> --> 
+
+<!-- User Spread -->
+<div class="row">
+<div class="col-md-6 col-xl-4 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      
+      <div class="d-flex flex-row justify-content-between">
+
+
+        <h4 class="card-title">Ethnicity Dispersion</h4>
+      
+      </div>
+      <div class="preview-list">
+        <canvas id="myChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-6 col-xl-4 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <div class="d-flex flex-row justify-content-between">
+
+
+        <h4 class="card-title">Gender Dispersion</h4>
+
+      </div>
+      <div class="preview-list">
+        <canvas id="genderChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+<!-- End User Spread -->
+
+<!-- Site Totals -->
+
+<div class="row">
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">Users</h3>
+              <p class="text-success ml-2 mb-0 font-weight-medium">{{users.count}}</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success ">
+              <span class="mdi mdi-arrow-top-right icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal"><a class="btn btn-link text-muted"
+            href="{% url 'dashboard:users' %}">See Users</a></h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">Projects</h3>
+              <p class="text-success ml-2 mb-0 font-weight-medium">{{projects.count}}</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success">
+              <span class="mdi mdi-arrow-top-right icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal"><a class="btn btn-link text-muted"
+            href="{% url 'dashboard:projects' %}">All Projects</a></h6>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">Blog Posts</h3>
+              <p class="text-success ml-2 mb-0 font-weight-medium">{{posts.count}}</p>
+
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-danger">
+              <span class="mdi mdi-arrow-bottom-left icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal"><a class="btn btn-outline-light text-muted"
+            href="{% url 'dashboard:posts' %}">See Posts</a></h6>
+        <p><a class="badge badge-outline-success" href="{% url 'dashboard:new_post' %}">New Blog Post</a></p>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">My Projects</h3>
+              <p class="text-success ml-2 mb-0 font-weight-medium"></p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success ">
+              <span class="mdi mdi-arrow-top-right icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal"><a class="btn btn-link text-muted"
+            href="{% url 'studio:my_projects' request.user.pk %}">Review</a></h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Press -->
+<div class="row">
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">Press</h3>
+              <p class="text-success ml-2 mb-0 font-weight-medium">{{press_notes.count}}</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success ">
+              <span class="mdi mdi-arrow-top-right icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal"><a class="btn btn-link text-muted"
+            href="{% url 'dashboard:press_notes' %}">All Press</a></h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">Resources</h3>
+              <p class="text-success ml-2 mb-0 font-weight-medium">{{resources.count}}</p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success">
+              <span class="mdi mdi-arrow-top-right icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal"><a class="btn btn-link text-muted"
+            href="{% url 'dashboard:resources' %}">All Resources</a></h6>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">Blog Posts</h3>
+              <p class="text-success ml-2 mb-0 font-weight-medium">{{posts.count}}</p>
+
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-danger">
+              <span class="mdi mdi-arrow-bottom-left icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal"><a class="btn btn-outline-light text-muted"
+            href="{% url 'dashboard:posts' %}">See Posts</a></h6>
+        <p><a class="badge badge-outline-success" href="{% url 'dashboard:new_post' %}">New Blog Post</a></p>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <div class="d-flex align-items-center align-self-start">
+              <h3 class="mb-0">My Projects</h3>
+              <p class="text-success ml-2 mb-0 font-weight-medium"></p>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="icon icon-box-success ">
+              <span class="mdi mdi-arrow-top-right icon-item"></span>
+            </div>
+          </div>
+        </div>
+        <h6 class="text-muted font-weight-normal"><a class="btn btn-link text-muted"
+            href="{% url 'studio:my_projects' request.user.pk %}">Review</a></h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- End Press -->
+<!-- Comment Approvals -->
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Authorize Blog Comments </h4>
+                <div class="row">
+
+                  <div class="col-12">
+
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <th>Post Title</th>
+                          <th>Comment By</th>
+                          <th>Commeted On</th>
+                          <th>Message</th>
+                          <th>Authorize</th>
+                        </thead>
+
+                        {% for comment in blog_comments %}
+                        <tr>
+                          <td><a class="badge badge-outline-info"
+                              href="{{comment.post.get_absolute_url}}">{{comment.post.heading}}</a></td>
+                          <td><a class="badge badge-outline-light"
+                              href="{% url 'accounts:user_profile' comment.author.pk %}">{{comment.author.get_full_name}}</a>
+                          </td>
+                          <td>{{comment.created|date:'Y/m/d h:m'}}</td>
+                          <td><a class="badge badge-busy" href="">{{comment.content}}</a></td>
+                          <td> <span><a class="badge badge-outline-danger "
+                                href="{% url 'dashboard:remove_comment' comment.pk %}">Remove</a></span></td>
+                        </tr>
+                        {% endfor %}
+
+                      </table>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Latest Projects -->
+<div class="row">
+
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex flex-row justify-content-between">
+          <h4 class="card-title mb-1">Latest Projects</h4>
+          <p class="text-muted mb-1">Status</p>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="preview-list">
+
+              {% for project in latest_projects %}
+              <a class="text-light" href="{{project.get_absolute_url}}">
+                <div class="preview-item border-bottom">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-primary">
+
+                      {% if project.image %}
+                      <img src="{{project.image.url}}" alt="">
+                      {% endif %}
+
+                    </div>
+                  </div>
+                  <div class="preview-item-content d-sm-flex flex-grow">
+                    <div class="flex-grow">
+                      <h6 class="preview-subject">{{project.name}}</h6>
+                      <p class="text-muted mb-0">{{project.owner.get_full_name}}</p>
+                    </div>
+                    <div class="mr-auto text-sm-right pt-2 pt-sm-0">
+                      <p class="text-muted">{{project.created}}</p>
+                      <p class="text-muted mb-0">{% get_hit_count for project %} Views</p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+              {% endfor %}
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Moderator Requests -->
+<div class="row ">
+  <div class="col-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Moderators</h4>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th> Name</th>
+                <th> Date Joined </th>
+                <th> Projects </th>
+                <th> Blog Comments </th>
+                <th>Profile</th>
+                <th> Action</th>
+
+              </tr>
+            </thead>
+            <tbody>
+
+              {% for user in users %}
+              
+              {% if user.is_moderator %}
+              <tr>
+              
+                <td>
+                  
+                  {% if user.photo %}
+                    <img style="width: 50px; height: 50px; border-radius: 50%;" src="{{user.photo.url}}" alt="no photos for {{user.first_name}}" />
+                  {% endif %}
+                    
+                  
+                  <span class="pl-2">{{user.get_full_name}} }</span>
+                </td>
+                <td> {{user.date_joined}} </td>
+                <td> {{user.projects.count}}</td>
+                <td> {{user.comments.count}} </td>
+                <td><a class="badge badge-outline-success" href="{% url 'accounts:user_profile' user.pk %}">See Profile</a></td>
+                
+               
+                  <td>
+                  <span><a class="badge badge-outline-danger" href="{% url 'dashboard:disable_moderator' user.pk %}">Reject</a></span>
+                </td>
+              </tr>
+              {% endif %}
+                
+              
+              {% endfor %}
+
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Latest Posts & Student Projects -->
+<div class="row">
+  <div class="col-md-6 col-xl-4 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex flex-row justify-content-between">
+
+
+          <h4 class="card-title">{{posts.count}} Latest Post{{posts.count|pluralize}}</h4>
+          <p class="text-muted mb-1 small"><a class="badge badge-outline-success text-highlight"
+              href="{% url 'blog:posts' %}">View all</a><a class="badge badge-outline-danger" href="">New Blog Post</a>
+          </p>
+        </div>
+        <div class="preview-list">
+
+          {% for post in posts %}
+          <div class="preview-item border-bottom">
+            <div class="preview-thumbnail">
+
+              {% if post.image %}
+              <img src="{{post.image.url}}" alt="image" class="rounded-circle" />
+              {% endif %}
+
+            </div>
+            <div class="preview-item-content d-flex flex-grow">
+              <div class="flex-grow">
+                <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                  <h6 class="preview-subject">{{post.author.first_name}}</h6>
+                  <p class="text-muted text-small">{{post.created}}</p>
+                </div>
+                <p class="text-muted">{{post.heading}}</p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-xl-4 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Student Projects</h4>
+        <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel" id="owl-carousel-basic">
+
+          {% for project in student_projects %}
+
+          {% if project.image %}
+          <div class="item">
+            <a href="{{project.get_absolute_url}}">
+              <img style="height: 300px; width: 80%;" src="{{project.image.url}}" alt="">
+              <span class="text-capitalize  btn btn-white">Review</span>
+            </a>
+
+          </div>
+          {% endif %}
+
+          {% endfor %}
+
+        </div>
+        <!-- <div class="d-flex py-4">
+                      <div class="preview-list w-100">
+                        <div class="preview-item p-0">
+                          <div class="preview-thumbnail">
+                            <img src="{% static 'dashboard/corona/assets/images/faces/face12.jpg' %} " class="rounded-circle" alt="">
+                          </div>
+                          <div class="preview-item-content d-flex flex-grow">
+                            <div class="flex-grow">
+                              <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                                <h6 class="preview-subject">CeeCee Bass</h6>
+                                <p class="text-muted text-small">4 Hours Ago</p>
+                              </div>
+                              <p class="text-muted">Well, it seems to be working now.</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="text-muted">Well, it seems to be working now. </p> -->
+        <!-- <div class="progress progress-md portfolio-progress">
+                      <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div> -->
+      </div>
+    </div>
+  </div>
+  <!-- Tasks -->
+  <div class="col-md-12 col-xl-4 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Tasks</h4>
+        <div class=" d-flex ">
+          <form action="" method="POST" style="color: #fff;">
+            {% csrf_token %}
+            <div class="form-inline">
+              {{task_form|crispy}}
+              {{form.media}}
+            </div>
+
+            <button type="submit" class="badge badge-success mt-2" style="display: block;">Add</button>
+
+
+          </form>
+
+
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Task</th>
+                <th>Due Date</th>
+                <th>Action</th>
+                <th>Task Id</th>
+              </tr>
+            <tbody>
+
+              {% for item in tasks %}
+              <tr>
+                <td>{{item.new_task}}</td>
+                <td>{{item.due_date}}</td>
+                <td><a id="cancel-task" href=""><i class="fa fa-remove"></i></a></td>
+                <td id="task-id"><a class="badge badge-outline-danger"
+                    href="{% url 'dashboard:remove_task' item.pk %}">Remove</a></td>
+              </tr>
+              {% endfor %}
+
+            </tbody>
+            </thead>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Member Locations -->
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Member Locations</h4>
+        <div class="row">
+          <!-- <div class="col-md-5">
+                        <div class="table-responsive">
+                          <table class="table">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <i class="flag-icon flag-icon-us"></i>
+                                </td>
+                                <td>USA</td>
+                                <td class="text-right"> 1500 </td>
+                                <td class="text-right font-weight-medium"> 56.35% </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <i class="flag-icon flag-icon-de"></i>
+                                </td>
+                                <td>Germany</td>
+                                <td class="text-right"> 800 </td>
+                                <td class="text-right font-weight-medium"> 33.25% </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <i class="flag-icon flag-icon-au"></i>
+                                </td>
+                                <td>Australia</td>
+                                <td class="text-right"> 760 </td>
+                                <td class="text-right font-weight-medium"> 15.45% </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <i class="flag-icon flag-icon-gb"></i>
+                                </td>
+                                <td>United Kingdom</td>
+                                <td class="text-right"> 450 </td>
+                                <td class="text-right font-weight-medium"> 25.00% </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <i class="flag-icon flag-icon-ro"></i>
+                                </td>
+                                <td>Romania</td>
+                                <td class="text-right"> 620 </td>
+                                <td class="text-right font-weight-medium"> 10.25% </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <i class="flag-icon flag-icon-br"></i>
+                                </td>
+                                <td>Brasil</td>
+                                <td class="text-right"> 230 </td>
+                                <td class="text-right font-weight-medium"> 75.00% </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div> -->
+          <div class="col-12">
+            <div id="map" style="height: 400px; width: 80%; margin: auto;">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Shop -->
+<div class="row">
+
+  <div class="col-sm-4 grid-margin">
+    <div class="card">
+
+      <div class="card-body">
+        <h5>Products In Merchandise </h5>
+        <div class="row">
+          <div class="col-8 col-sm-12 col-xl-8 my-auto">
+            <div class="d-flex d-sm-block d-md-flex align-items-center">
+              <h6 class="mb-0">{{products.count}} Product{{products.count|pluralize}}</h6>
+
+            </div>
+          </div>
+          <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+            <i class="icon-lg mdi mdi-codepen text-primary ml-auto"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h5>Top Selling</h5>
+        <div class="row">
+          <div class="col-8 col-sm-12 col-xl-8 my-auto">
+            <div class="d-flex d-sm-block d-md-flex align-items-center">
+
+              {% if sold_list %}
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Sales</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for item in sold_list %}
+                  <tr>
+                    <td><span class="badge badge-outline-success">{{item.product}}</span></td>
+                    <td><span class="btn btn-behance">{{item.quantity}}</span></td>
+                  </tr>
+
+                  {% endfor %}
+                </tbody>
+              </table>
+              {% else %}
+              <h6>No Sales Recorded On Products</h6>
+
+              {% endif %}
+
+            </div>
+
+          </div>
+          <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h5>Product Categories</h5>
+        <div class="row">
+          <div class="col-8 col-sm-12 col-xl-8 my-auto">
+            <div class="d-flex d-sm-block d-md-flex align-items-center">
+              <h6 class="mb-0">{{product_categories.count}}</h6>
+
+            </div>
+
+          </div>
+          <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+            <i class="icon-lg mdi mdi-monitor text-success ml-auto"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+
+
+{% block javascript %}
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDOpEeYV2V0k_EZVpRpbfeUAiQqQcwLIA&callback=initMap">
+  </script>
+
+<script>
+
+  var map;
+  var bounds;
+
+  function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 10,
+      mapTypeControl: false
+    });
+    bounds = new google.maps.LatLngBounds();
+    $.ajax({
+      url: '/api/accounts/users',
+      method: 'GET',
+      dataType: 'json',
+      success: function (users) {
+        showUsers(users)
+      }
+    })
+
+    function showUsers(users) {
+      $.each(users, function (i, user) {
+        var userCoords = new google.maps.LatLng({
+          lat: user.location.coordinates[1],
+          lng: user.location.coordinates[0]
+        });
+        bounds.extend(userCoords);
+        map.fitBounds(bounds);
+        var marker = new google.maps.Marker({
+          position: userCoords,
+          map: map,
+          label: user.first_name,
+          title: user.first_name,
+          animation: google.maps.Animation.BOUNCE
+        })
+      })
+    }
+  }
+</script>
+
+<script>
+  $(document).ready(function () {
+
+    $('#date').datepicker({
+      format: 'dd/mm/yyyy'
+    });
+  });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+<script>
+  var $myChart = $("#myChart");
+function getEthnicity(){
+  
+  $.ajax({
+    url: '/dashboard/ethnicity/view',
+    method: 'GET',
+    dataType: 'json',
+    success: function(data){
+      doEchart(data)
+    }
+  })
+}
+
+function doEchart(data){
+  var ctx = myChart.getContext("2d");
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: data.labels,
+      datasets: [{
+        label: 'Population',
+        backgroundColor: [
+          'blue',
+          'black',
+          'orange'
+        ],
+        data: data.data
+      }]
+    },
+    options: {
+      responsive: true,
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Ethnicity Bar Chart'
+      }
+    }
+}
+  )}
+    
+  setInterval(getEthnicity, 3000)
+</script>
+
+
+<script>
+  var $genderChart = $("#genderChart");
+  function getGender () {
+
+    $.ajax({
+      url: '/dashboard/gender/view',
+      method: 'GET',
+      dataType: 'json',
+      success: function (data) {
+        doGchart(data)
+      }
+    })
+  }
+
+  function doGchart(data) {
+    var ctx = genderChart.getContext("2d");
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: data.labels,
+        datasets: [{
+          label: 'Gender Dispersion On ADM',
+          backgroundColor: ['white', 'blue'],
+          data: data.data
+        }]
+      },
+      options: {
+        responsive: true,
+        legend: {
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: 'Gender Analysis'
+        }
+      }
+    }
+    )
+  }
+
+setInterval(getGender, 4000)
+</script>
+
+{% endblock javascript %}

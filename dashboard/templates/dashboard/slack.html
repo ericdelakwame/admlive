@@ -1,0 +1,39 @@
+{% extends 'dashboard/header.html' %}
+
+
+{% block title %}
+    Slack
+{% endblock title %}
+
+
+
+{% block content %}
+<head>
+    <style>
+        li{
+            list-style: none;
+        }
+        a{
+            text-decoration: none;
+        }
+    </style>
+</head>
+<div class="row">
+    <div class="col-12">
+        <div class="container">
+            <h1>ADM Slack Connect</h1>
+        </div>
+        <nav >
+        <div class="container" style="display: flex; gap: 10px;">
+            <li><a class="btn btn-light" href="{% url 'dashboard:list_slack_channels' %}">List Channels</a></li>
+            <li><a class="btn btn-light" href="{% url 'dashboard:create_channel' %}">Create New Channel</a></li>
+        
+        </div>
+           
+        </nav>
+    </div>
+</div>
+    
+{% endblock content %}
+    
+    

@@ -1,0 +1,45 @@
+{% extends 'studio/header.html' %}
+{% load static %}
+
+
+
+{% block title %}
+    {{user.profile.real_name}}
+{% endblock title %}
+
+
+
+{% block content %}
+
+<div class="row">
+    <div class="col-12">
+        <div class="container">
+            <div class="card">
+                <h2 class="card-title">{{user.profile.real_name_normalized}} <span class="btn btn-outline-light">{{user.profile.email}}</span></h2>
+                
+                {% if user.profile.image_original %}
+                    <img src="{{user.profile.image_original.url}}" alt="" >
+                   
+
+                {% endif %}
+
+
+                {% if user.profile.status_emoji %}
+                <p>{{user.profile.status_emoji}}</p>
+                
+                {% endif %}
+                    
+                    {% if user.profile.status_text  != '' %}
+                    <p>Status {{user.profile.status_text}}</p>
+                    {% else %}
+                    User has not updated status
+                    {% endif %}
+                        
+               
+            </div>
+        </div>
+    </div>
+</div>
+    
+{% endblock content %}
+    
